@@ -26,6 +26,10 @@ class Core {
       barClickX: 0
     };
     this.modules = {};
+    this.limit = {
+      min: 0,
+      max: 1
+    };
     this.values = [];
     this.valueInMove = [];
     this.stepRatio = 0;
@@ -71,7 +75,7 @@ class Core {
     }
 
     this.values[id] = roundedValue;
-    this.setSliderValue(roundedValue, id);
+    this._updateSlider(id, roundedValue);
 
     this.modules.eventizer.trigger(
       'core/value:update',
@@ -101,14 +105,13 @@ class Core {
     }
   }
 
-  setSliderValue (value, sliderNum) {
+  _updateSlider (sliderNum, value) {
     const body = this.modules.renderer.body;
     const slider = body.sliders[sliderNum];
     const left = `${value * 100}%`;
 
     this.logger.debug(`JSR: Slider no. ${sliderNum} set to value: ${value}.`);
 
-    this.values[sliderNum] = value;
     slider.style.left = left;
 
     this._updateBars(sliderNum, value);
@@ -204,6 +207,7 @@ class Core {
     }
   }
 
+  /* istanbul ignore next */
   view () {
     const railOuter = {
       classes: ['jsr_rail-outer'],
@@ -254,6 +258,10 @@ class Core {
     ];
   }
 }
+
+export {
+  Core
+};
 
 export default {
   name: 'core',

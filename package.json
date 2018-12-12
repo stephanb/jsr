@@ -5,7 +5,8 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch --coverage",
+    "test:ci": "jest --ci",
     "dev": "grunt dev",
     "build": "grunt build"
   },
@@ -31,6 +32,7 @@
     "grunt-mkdir": "^1.0.0",
     "grunt-rollup": "^4.0.0",
     "jest": "^21.2.1",
+    "jest-cli": "^23.6.0",
     "rollup": "^0.49.2",
     "rollup-plugin-alias": "git+https://github.com/soanvig/rollup-plugin-alias.git",
     "rollup-plugin-babel": "^3.0.2",
