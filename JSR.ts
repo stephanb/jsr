@@ -1,14 +1,15 @@
 import { Module, ModuleConstructor } from '~/Module';
-
-interface IConfig {
-  modules: ModuleConstructor[];
-}
+import Config, { IConfig } from '~/Config';
 
 export class JSR {
-  private fModules: Module[] = [];
-
   /** Holds collection of available modules to use */
   private static fAvailableModules: ModuleConstructor[] = [];
+
+  /** Holds modules instances */
+  private fModules: Module[] = [];
+
+  /** Holds Config instance */
+  private fConfig: Config;
 
   /**
    * Returns copy of all available modules to use.
@@ -39,9 +40,9 @@ export class JSR {
    *
    * @param config JSR configuration
    */
-  constructor (config: IConfig) {
-    const modules: ModuleConstructor[] = config.modules || JSR.fAvailableModules;
-    this.fModules = this.buildModules(modules);
+  constructor (config?: IConfig) {
+    this.fConfig = new Config(JSR.fAvailableModules, config);
+    this.fModules = this.buildModules(this.fConfig.modules);
   }
 
   /**
