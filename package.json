@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --production",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --hot --inline"
   },
   "files": [],
   "main": "./index.ts",

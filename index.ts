@@ -9,4 +9,4 @@ if (module.hot) {
   module.hot.accept();
 }
 
-export default JSR;
+export { JSR };

@@ -8,10 +8,9 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'JSR',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    globalObject: 'this'
+    globalObject: `typeof self !== 'undefined' ? self : this`
   },
 
   resolve: {
@@ -36,6 +35,7 @@ module.exports = {
     port: 5432,
     open: true,
     hot: true,
-    index: 'index.html'
+    index: 'index.html',
+    inline: true
   }
 }
