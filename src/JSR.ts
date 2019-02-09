@@ -55,7 +55,7 @@ export class JSR {
 
   /**
    * Initializes modules
-  */
+   */
   private initModules (moduleList: Module[], config: Config): void {
     moduleList.forEach(module => module.init(config));
   }

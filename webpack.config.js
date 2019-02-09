@@ -4,7 +4,7 @@ const argv = require('minimist')(process.argv.slice(2));
 module.exports = {
   mode: argv.production ? 'production' : 'development',
 
-  entry: ['./index.ts'],
+  entry: ['./src/index.ts'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -15,7 +15,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      '~': path.resolve(__dirname),
+      '~': path.resolve(__dirname, 'src'),
     },
     extensions: ['.ts', '.json', '.js'],
   },
