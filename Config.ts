@@ -28,6 +28,9 @@ export default class Config {
       { modules: registeredModules },
       config,
     );
+
+    // Lock config
+    Object.freeze(this.fConfig);
   }
 
   /**

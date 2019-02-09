@@ -43,12 +43,20 @@ export class JSR {
   constructor (config?: IConfig) {
     this.fConfig = new Config(JSR.fAvailableModules, config);
     this.fModules = this.buildModules(this.fConfig.modules);
+    this.initModules(this.fModules, this.fConfig);
   }
 
   /**
    * Converts modules' constructors into their instances.
    */
-  private buildModules (moduleList: ModuleConstructor[]): Module[] {
-    return moduleList.map(moduleConstructor => new moduleConstructor());
+  private buildModules (constructorList: ModuleConstructor[]): Module[] {
+    return constructorList.map(moduleConstructor => new moduleConstructor());
+  }
+
+  /**
+   * Initializes modules
+  */
+  private initModules (moduleList: Module[], config: Config): void {
+    moduleList.forEach(module => module.init(config));
   }
 }
