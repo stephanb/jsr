@@ -1,10 +1,12 @@
 import { JSR } from '~/JSR';
 import { Greeter } from '~/Greeter';
 
+declare const module: any;
+
 JSR.use(Greeter);
 
-const jsr: JSR = new JSR({
-  modules: [
-    JSR.modules.Greeter,
-  ],
-});
+if (module.hot) {
+  module.hot.accept();
+}
+
+export default JSR;

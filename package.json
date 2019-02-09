@@ -5,7 +5,8 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --production"
+    "build": "webpack --production",
+    "dev": "webpack-dev-server"
   },
   "files": [],
   "main": "./index.ts",
@@ -21,6 +22,7 @@
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.3.3",
     "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
   }
 }
