@@ -1,5 +1,6 @@
 import { Module, ModuleConstructor } from '~/Module';
 import Config, { IConfig } from '~/Config';
+import { Renderer } from '~/Renderer';
 
 export class JSR {
   /** Holds collection of available modules to use */
@@ -10,6 +11,9 @@ export class JSR {
 
   /** Holds Config instance */
   private fConfig: Config;
+
+  /** Holds Renderer instance */
+  private fRenderer: Renderer;
 
   /**
    * Returns copy of all available modules to use.
@@ -40,8 +44,9 @@ export class JSR {
    *
    * @param config JSR configuration
    */
-  constructor (config?: IConfig) {
+  constructor (config: IConfig) {
     this.fConfig = new Config(JSR.fAvailableModules, config);
+    this.fRenderer = new Renderer(this.fConfig.rootEl);
     this.fModules = this.buildModules(this.fConfig.modules);
     this.initModules(this.fModules, this.fConfig);
   }
@@ -59,4 +64,5 @@ export class JSR {
   private initModules (moduleList: Module[], config: Config): void {
     moduleList.forEach(module => module.init(config));
   }
+
 }

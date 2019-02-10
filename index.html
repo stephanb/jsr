@@ -8,9 +8,13 @@
 </head>
 <body>
 
+  <div id="jsr"></div>
+
   <script src="/bundle.js"></script>
   <script>
-    new JSR();
+    new JSR({
+      root: document.querySelector('#jsr')
+    });
   </script>
 </body>
 </html>
