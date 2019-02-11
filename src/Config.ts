@@ -22,7 +22,7 @@ export default class Config {
    * @param config config to convert into DTO
    * @param registeredModules array of available modules to use, used as fallback for config.modules
    */
-  constructor (registeredModules: ModuleConstructor[], config: IConfig) {
+  constructor (config: IConfig, registeredModules: ModuleConstructor[]) {
     this.validateConfig(config);
 
     this.fConfig = Object.assign(
