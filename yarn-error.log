@@ -1,0 +1,66 @@
+Arguments: 
+  /usr/bin/node /usr/bin/yarn rollup:dev
+
+PATH: 
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.12.3
+
+Node version: 
+  8.11.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/enp.local/mkoteja/repos/jsr/package.json: Unexpected token } in JSON at position 343
+      at JSON.parse (<anonymous>)
+      at /usr/lib/node_modules/yarn/lib/cli.js:1631:59
+      at Generator.next (<anonymous>)
+      at step (/usr/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /usr/lib/node_modules/yarn/lib/cli.js:315:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "mm-jsr",
+    "version": "2.0.0",
+    "author": "Mateusz 'Soanvig' Koteja",
+    "description": "Pure JS range input solution",
+    "license": "MIT",
+    "scripts": {
+      "webacpk:build": "webpack --production",
+      "webpack:dev": "webpack-dev-server --hot --inline",
+      "rollup:build": "rollup -c",
+      "rollup:dev": "rollup -c --watch",
+    },
+    "files": [],
+    "main": "./dist/bundle.js",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/soanvig/jsr.git"
+    },
+    "devDependencies": {
+      "csstype": "^2.6.2",
+      "minimist": "^1.2.0",
+      "rollup": "^1.1.2",
+      "rollup-plugin-node-resolve": "^4.0.0",
+      "rollup-plugin-terser": "^4.0.4",
+      "rollup-plugin-typescript2": "^0.19.2",
+      "ts-loader": "^5.3.3",
+      "tslint": "^5.12.1",
+      "tslint-config-standard": "^8.0.1",
+      "tslint-eslint-rules": "^5.4.0",
+      "typescript": "^3.3.3",
+      "webpack": "^4.29.3",
+      "webpack-cli": "^3.2.3",
+      "webpack-dev-server": "^3.1.14"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
