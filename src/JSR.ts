@@ -28,6 +28,7 @@ export class JSR {
 
   /**
    * Adds module's constructor to list of available modules to use.
+   * Used mainly as "use all modules by default"
    *
    * @param module module's constructor
    */

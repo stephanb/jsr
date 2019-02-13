@@ -10,10 +10,13 @@
 
   <div id="jsr"></div>
 
-  <script src="./dist/index.js"></script>
-  <script>
+  <script type="module">
+    import { JSR } from './dist/JSR.mjs';
+    import { Greeter } from './dist/Greeter.mjs';
+
     new JSR({
-      root: document.querySelector('#jsr')
+      root: document.querySelector('#jsr'),
+      modules: [Greeter],
     });
   </script>
 </body>
