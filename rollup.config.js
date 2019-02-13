@@ -7,8 +7,11 @@ const rollupPlugins = [
     clean: true
   }),
   NodeResolve(),
-  // Terser(),
 ];
+
+if (process.env.production) {
+  rollupPlugins.push(Terser());
+}
 
 export default [
   {
@@ -17,6 +20,7 @@ export default [
       file: 'dist/index.js',
       format: 'umd',
       name: 'JSR',
+      exports: 'named'
     },
     plugins: rollupPlugins
   },

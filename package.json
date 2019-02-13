@@ -5,7 +5,7 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --production",
     "dev": "rollup -c --watch"
   },
   "files": [],
@@ -16,18 +16,13 @@
   },
   "devDependencies": {
     "csstype": "^2.6.2",
-    "minimist": "^1.2.0",
     "rollup": "^1.1.2",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-typescript2": "^0.19.2",
-    "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "tslint-config-standard": "^8.0.1",
     "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.3.3",
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.14"
+    "typescript": "^3.3.3"
   }
 }
