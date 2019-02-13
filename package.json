@@ -5,7 +5,7 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c --production",
+    "build": "rollup -c --environment production",
     "dev": "rollup -c --watch"
   },
   "files": [],
