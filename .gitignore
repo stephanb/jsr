@@ -1,5 +1,5 @@
 yarn.lock
 package-lock.json
-yarn.error
+yarn-error.log
 dist
 node_modules
