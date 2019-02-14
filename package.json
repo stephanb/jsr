@@ -5,8 +5,10 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c --environment production",
-    "dev": "rollup -c --watch"
+    "build:es5": "rollup -c --production --target es5",
+    "build:es6": "rollup -c --production --target es6",
+    "build:modular": "rollup -c --production --modular --target es6",
+    "dev": "rollup -c --watch --modular"
   },
   "files": [],
   "main": "./dist/index.js",
