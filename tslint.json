@@ -6,7 +6,6 @@
   "rules": {
       "trailing-comma": [true, { "multiline": "always", "singleline": "never", "esSpecCompliant": true }],
       "semicolon": true,
-      "newline-per-chained-call": true,
       "no-redundant-jsdoc": true,
       "no-shadowed-variable": true
   }

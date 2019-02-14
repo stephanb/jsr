@@ -8,7 +8,8 @@
     "build:es5": "rollup -c --production --target es5",
     "build:es6": "rollup -c --production --target es6",
     "build:modular": "rollup -c --production --modular --target es6",
-    "dev": "rollup -c --watch --modular --target es6 | live-server --watch=./dist ."
+    "dev": "rollup -c --watch --modular --target es6 | live-server --watch=./dist .",
+    "test:unit": "jest"
   },
   "files": [],
   "main": "./dist/index.js",
@@ -17,12 +18,15 @@
     "url": "https://github.com/soanvig/jsr.git"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.5",
     "csstype": "^2.6.2",
+    "jest": "^23.6.0",
     "live-server": "^1.2.1",
     "rollup": "^1.1.2",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-typescript2": "^0.19.2",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "tslint-config-standard": "^8.0.1",
     "tslint-eslint-rules": "^5.4.0",
