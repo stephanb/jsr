@@ -11,6 +11,7 @@ const jsrModules = [
 export default (options) => {
   validateOptions(options);
 
+  // Build list of rollup plugins, leave truthy values
   const rollupPlugins = [
     NodeResolve(),
     Typescript({
@@ -24,12 +25,15 @@ export default (options) => {
     options.configProduction ? Terser() : null
   ].filter(p => p);
 
+  // Determine output dir
+  const outputDir = options.configProduction ? 'dist' : 'tmp';
+
   // Not modular build
   if (!options.configModular) {
     return {
       input: 'src/index.ts',
       output: {
-        file: 'dist/index.js',
+        file: `${outputDir}/index.js`,
         format: 'umd',
         name: 'JSR',
         exports: 'named'
@@ -43,16 +47,16 @@ export default (options) => {
     const inputs = jsrModules.map(filename => ({
       input: `src/${filename}.ts`,
       output: {
-        file: `dist/${filename}.mjs`,
+        file: `${outputDir}/${filename}.mjs`,
         format: 'esm',
       },
       plugins: rollupPlugins
     }));
 
-    return inputs
+    return inputs;
   }
 
-  throw new Error(`Rollup build: don't know what to do with given options!`)
+  throw new Error(`Rollup build: don't know what to do with given options!`);
 }
 
 /**

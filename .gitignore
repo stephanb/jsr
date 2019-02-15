@@ -3,3 +3,4 @@ package-lock.json
 yarn-error.log
 dist
 node_modules
+tmp
