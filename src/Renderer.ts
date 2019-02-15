@@ -46,12 +46,7 @@ export class RendererElement {
    */
   constructor (tag: string, attributes?: Record<string, any>, children: (string | RendererElement)[] = []) {
     this.fElement = this.createDOMElement(tag, attributes);
-
-    // For each child given, insert it into element
-    children.forEach((child) => {
-      const element = (typeof child === 'string') ? document.createTextNode(child) : child.element;
-      this.fElement.appendChild(element);
-    });
+    children.forEach((child) => this.addChild(child));
   }
 
   /**
@@ -82,10 +77,11 @@ export class RendererElement {
    *
    * @param child RendererElement to be added
    */
-  public addChild (child: RendererElement): Promise<RendererElement> {
+  public addChild (child: string | RendererElement): Promise<RendererElement> {
     return new Promise((resolve) => {
       window.requestAnimationFrame(() => {
-        this.fElement.appendChild(child.element);
+        const element = (typeof child === 'string') ? document.createTextNode(child) : child.element;
+        this.fElement.appendChild(element);
         resolve(this);
       });
     });
