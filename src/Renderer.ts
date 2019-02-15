@@ -14,6 +14,13 @@ export class Renderer {
   }
 
   /**
+   * Returns root element
+   */
+  public get root (): RendererElement {
+    return this.fRootElement;
+  }
+
+  /**
    * Creates RendererElement.
    *
    * @param tag name of the tag to create

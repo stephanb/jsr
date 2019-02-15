@@ -11,6 +11,11 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false
+  },
+  "exclude": [
+    "./dist",
+    "./tmp"
+  ]
 }

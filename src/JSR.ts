@@ -49,7 +49,7 @@ export class JSR {
     this.fConfig = new Config(config, JSR.fAvailableModules);
     this.fRenderer = new Renderer(this.fConfig.rootEl);
     this.fModules = this.buildModules(this.fConfig.modules);
-    this.initModules(this.fModules, this.fConfig);
+    this.initModules(this.fModules, this.fConfig, this.fRenderer);
   }
 
   /**
@@ -62,8 +62,8 @@ export class JSR {
   /**
    * Initializes modules
    */
-  private initModules (moduleList: Module[], config: Config): void {
-    moduleList.forEach(module => module.init(config));
+  private initModules (moduleList: Module[], config: Config, renderer: Renderer): void {
+    moduleList.forEach(module => module.init(config, renderer));
   }
 
 }
