@@ -5,9 +5,9 @@
   "description": "Pure JS range input solution",
   "license": "MIT",
   "scripts": {
-    "build:es5": "rollup -c --production --target es5",
-    "build:es6": "rollup -c --production --target es6",
-    "build:modular": "rollup -c --production --modular --target es6",
+    "build:es5": "rollup -c --configProduction --configTarget es5",
+    "build:es6": "rollup -c --configProduction --configTarget es6",
+    "build:modular": "rollup -c --configProduction --configModular --configTarget es6",
     "dev": "rollup -c --watch --modular --target es6 | live-server --watch=./dist .",
     "test:unit": "jest"
   },

@@ -17,15 +17,15 @@ export default (options) => {
       clean: true,
       tsconfigOverride: {
         compilerOptions: {
-          target: options.target
+          target: options.configTarget
         }
       }
     }),
-    options.production ? Terser() : null
+    options.configProduction ? Terser() : null
   ].filter(p => p);
 
   // Not modular build
-  if (!options.modular) {
+  if (!options.configModular) {
     return {
       input: 'src/index.ts',
       output: {
@@ -39,7 +39,7 @@ export default (options) => {
   }
 
   // Modular
-  if (options.modular) {
+  if (options.configModular) {
     const inputs = jsrModules.map(filename => ({
       input: `src/${filename}.ts`,
       output: {
@@ -60,11 +60,11 @@ export default (options) => {
  * @param {Object} options object of CLI options (e.g. `--production` => `options.production = true`)
  */
 const validateOptions = (options) => {
-  if (options.target === 'es5' && options.modular) {
+  if (options.configTarget === 'es5' && options.configModular) {
     throw new Error('Rollup build: options.es5 cannot be used with options.modular!');
   }
 
-  if (!options.target) {
+  if (!options.configTarget) {
     throw new Error('Rollup build: missing options.target (es5, es6, es2017 or similar)!');
   }
 }
