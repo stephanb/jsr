@@ -7,9 +7,10 @@ export class Greeter implements Module {
   private fElement: RendererElement ;
 
   public init (config: Config, renderer: Renderer) {
-    this.fElement = renderer.requestElement('div', {
+    this.fElement = renderer.createElement('div', {
       'class': 'jsr_greeter',
-    }, renderer.root);
-    this.fElement.element.innerHTML = 'Welcome to JSR! :)';
+    }, ['Welcome to JSR! :)']);
+
+    renderer.root.addChild(this.fElement);
   }
 }

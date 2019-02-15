@@ -26,12 +26,15 @@ export class Renderer {
    * @param tag name of the tag to create
    * @param attributes set of attributes to append to element
    */
-  public requestElement (tag: string, attributes?: Record<string, any>, parent?: RendererElement): RendererElement {
-    return new RendererElement(tag, attributes, parent);
+  public createElement (
+    tag: string, attributes?: Record<string, any>, children?: (string | RendererElement)[],
+  ): RendererElement {
+    return new RendererElement(tag, attributes, children);
   }
 }
 
 export class RendererElement {
+
   /** Holds DOM element reference */
   private fElement: HTMLElement;
 
@@ -41,13 +44,14 @@ export class RendererElement {
    * @param tag name of the tag to create
    * @param attributes set of attributes to append to element
    */
-  constructor (tag: string, attributes?: Record<string, any>, parent?: RendererElement) {
+  constructor (tag: string, attributes?: Record<string, any>, children: (string | RendererElement)[] = []) {
     this.fElement = this.createDOMElement(tag, attributes);
 
-    // Save itself to parent
-    if (parent) {
-      parent.addChild(this);
-    }
+    // For each child given, insert it into element
+    children.forEach((child) => {
+      const element = (typeof child === 'string') ? document.createTextNode(child) : child.element;
+      this.fElement.appendChild(element);
+    });
   }
 
   /**
@@ -73,12 +77,18 @@ export class RendererElement {
   }
 
   /**
-   * Allows to add child to DOM element
+   * Allows to add child to DOM element.
+   * Actions is rAFed, because element is probably already in DOM
    *
    * @param child RendererElement to be added
    */
-  public addChild (child: RendererElement): void {
-    this.fElement.appendChild(child.element);
+  public addChild (child: RendererElement): Promise<RendererElement> {
+    return new Promise((resolve) => {
+      window.requestAnimationFrame(() => {
+        this.fElement.appendChild(child.element);
+        resolve(this);
+      });
+    });
   }
 
   /**
