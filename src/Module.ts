@@ -6,5 +6,9 @@ export type ModuleConstructor = {
 };
 
 export abstract class Module {
+
+  /**
+   * Initializes modules with injected core services
+   */
   public abstract init (config: Config, renderer: Renderer): void;
 }

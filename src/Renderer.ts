@@ -33,6 +33,10 @@ export class Renderer {
   }
 }
 
+/**
+ * Instance of HTMLElement wrapper which optimizes certain operations
+ * like modyfing styles on inserting children.
+ */
 export class RendererElement {
 
   /** Holds DOM element reference */
@@ -66,6 +70,7 @@ export class RendererElement {
     return new Promise((resolve) => {
       window.requestAnimationFrame(() => {
         Object.assign(this.fElement.style, styles);
+
         resolve(this);
       });
     });
@@ -82,6 +87,7 @@ export class RendererElement {
       window.requestAnimationFrame(() => {
         const element = (typeof child === 'string') ? document.createTextNode(child) : child.element;
         this.fElement.appendChild(element);
+
         resolve(this);
       });
     });
