@@ -1,6 +1,7 @@
 import * as CSS from 'csstype';
 
 export class Renderer {
+
   /** Holds instance of root RendererElement */
   private fRootElement: RendererElement;
 
@@ -14,7 +15,7 @@ export class Renderer {
   }
 
   /**
-   * Returns root element
+   * Returns root element.
    */
   public get root (): RendererElement {
     return this.fRootElement;
@@ -78,7 +79,7 @@ export class RendererElement {
 
   /**
    * Allows to add child to DOM element.
-   * Actions is rAFed, because element is probably already in DOM
+   * Actions is rAFed, because element is probably already in DOM.
    *
    * @param child RendererElement to be added
    */

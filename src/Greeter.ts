@@ -3,7 +3,7 @@ import Config from '~/Config';
 import { Renderer, RendererElement } from '~/Renderer';
 
 /**
- * Test Module whose primary responsibility is greeting users in various way
+ * Test Module whose primary responsibility is greeting users in various way.
  */
 export class Greeter implements Module {
 
@@ -30,7 +30,7 @@ export class Greeter implements Module {
   }
 
   /**
-   * Creates root element
+   * Creates root element.
    */
   private createRoot (renderer: Renderer): RendererElement {
     return renderer.createElement('div', {

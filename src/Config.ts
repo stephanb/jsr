@@ -6,7 +6,7 @@ export interface IConfig {
 }
 
 /**
- * Serves as DTO for system config
+ * Serves as DTO for system config.
  */
 export default class Config {
   private static fDefaults: Partial<IConfig> = {
@@ -17,7 +17,7 @@ export default class Config {
   private fConfig: IConfig;
 
   /**
-   * Creates Config DTO
+   * Creates Config DTO.
    *
    * @param config config to convert into DTO
    * @param registeredModules array of available modules to use, used as fallback for config.modules
@@ -37,21 +37,21 @@ export default class Config {
   }
 
   /**
-   * Returns modules to used in app
+   * Returns modules to used in app.
    */
   public get modules (): ModuleConstructor[] {
     return this.fConfig.modules;
   }
 
   /**
-   * Returns root DOM element
+   * Returns root DOM element.
    */
   public get rootEl (): HTMLElement {
     return this.fConfig.root;
   }
 
   /**
-   * Validates config and throws in case of error
+   * Validates config and throws in case of error.
    */
   public validateConfig (config: IConfig): boolean {
     if (!config) {

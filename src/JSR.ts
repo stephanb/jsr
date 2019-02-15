@@ -28,7 +28,7 @@ export class JSR {
 
   /**
    * Adds module's constructor to list of available modules to use.
-   * Used mainly as "use all modules by default"
+   * Used mainly as "use all modules by default".
    *
    * @param module module's constructor
    */
@@ -60,7 +60,7 @@ export class JSR {
   }
 
   /**
-   * Initializes modules
+   * Initializes modules.
    */
   private initModules (moduleList: Module[], config: Config, renderer: Renderer): void {
     moduleList.forEach(module => module.init(config, renderer));
