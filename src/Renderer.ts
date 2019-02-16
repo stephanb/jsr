@@ -49,7 +49,9 @@ export class RendererElement {
    * @param tag name of the tag to create
    * @param attributes set of attributes to append to element
    */
-  constructor (tag: string, attributes?: Record<string, any>, children: (string | RendererElement)[] = []) {
+  constructor (
+    tag: string, attributes?: Record<string, any> | null, children: (string | RendererElement)[] = [],
+  ) {
     this.fElement = this.createDOMElement(tag, attributes);
     children.forEach((child) => this.addChild(child));
   }
@@ -100,15 +102,26 @@ export class RendererElement {
    * @param tag name of the tag to create
    * @param attributes set of attributes to append to element
    */
-  private createDOMElement (tag: string, attributes?: Record<string, any>): HTMLElement {
+  private createDOMElement (tag: string, attributes?: Record<string, any> | null): HTMLElement {
     const newEl: HTMLElement = document.createElement(tag);
 
     if (attributes) {
       for (const attr in attributes) {
-        newEl.setAttribute(attr, attributes[attr]);
+        const kebabCasedAttr: string = this.camelToKebab(attr);
+        newEl.setAttribute(kebabCasedAttr, attributes[attr]);
       }
     }
 
     return newEl;
+  }
+
+  /**
+   * Converts given string in camel case to kebab-case alternative.
+   * Source: https://gist.github.com/nblackburn/875e6ff75bc8ce171c758bf75f304707
+   *
+   * @param camelCase string in camelCase to be converted
+   */
+  private camelToKebab (camelCase: string): string {
+    return camelCase.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   }
 }
