@@ -14,7 +14,7 @@ describe('JSR static', () => {
   });
 
   describe('JSR.modules', () => {
-    it('should return available modules and easy to use object', () => {
+    it('should return available modules as easy to use object', () => {
       JSR.use(FooModule);
       JSR.use(BarModule);
 
