@@ -33,11 +33,19 @@ export class JSR {
    * @param module module's constructor
    */
   public static use (module: ModuleConstructor): void {
-    if (module.name in JSR.fAvailableModules) {
+    if (JSR.fAvailableModules.includes(module)) {
       throw new Error(`Module ${module.name} is already in use`);
     }
 
     JSR.fAvailableModules.push(module);
+  }
+
+  /**
+   * Clears available modules.
+   * Useful for testing.
+   */
+  public static clearModules (): void {
+    this.fAvailableModules = [];
   }
 
   /**
