@@ -112,4 +112,30 @@ describe('RendererElement', () => {
       expect(el.element.style.right).toBe('15px');
     });
   });
+
+  describe('html', () => {
+    describe('getter', () => {
+      it('should return inner html of element', async () => {
+        const el = new RendererElement('div', null, ['text']);
+
+        await rAF();
+
+        expect(el.html).toBe('text');
+      });
+    });
+
+    describe('setter', () => {
+      it('should set new HTML content via rAF', async () => {
+        const el = new RendererElement('div', null, ['text']);
+
+        await rAF();
+
+        el.html = 'foobar';
+        expect(el.html).not.toBe('foobar');
+
+        await rAF();
+        expect(el.html).toBe('foobar');
+      });
+    });
+  });
 });

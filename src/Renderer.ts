@@ -64,6 +64,22 @@ export class RendererElement {
   }
 
   /**
+   * Returns innerHTML of element.
+   */
+  public get html (): string {
+    return this.fElement.innerHTML;
+  }
+
+  /**
+   * Sets innerHTML of element via rAF.
+   */
+  public set html (val: string) {
+    window.requestAnimationFrame(() => {
+      this.fElement.innerHTML = val;
+    });
+  }
+
+  /**
    * Patches element styles.
    *
    * @param el element to patch
