@@ -1,5 +1,5 @@
 import { Module, ModuleConstructor } from '~/Module';
-import Config, { IConfig } from '~/Config';
+import { IConfig, Config } from '~/Config';
 import { Renderer } from '~/Renderer';
 
 export class JSR {

@@ -1,5 +1,5 @@
 import { Module } from '~/Module';
-import Config from '~/Config';
+import { Config } from '~/Config';
 import { Renderer, RendererElement } from '~/Renderer';
 
 /**

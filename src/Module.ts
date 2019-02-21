@@ -1,4 +1,4 @@
-import Config from '~/Config';
+import { Config } from '~/Config';
 import { Renderer } from '~/Renderer';
 
 export type ModuleConstructor = {

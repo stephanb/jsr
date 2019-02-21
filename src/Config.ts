@@ -8,7 +8,7 @@ export interface IConfig {
 /**
  * Serves as DTO for system config.
  */
-export default class Config {
+export class Config {
   private static fDefaults: Partial<IConfig> = {
     modules: [], // will be overwritten by given registeredModules
   };
