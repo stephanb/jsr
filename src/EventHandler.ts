@@ -1,6 +1,7 @@
 import { Module } from '~/Module';
 
 interface ModuleEventRequest {
+  id: number;
   module: Module;
   event: typeof Event;
   callback: TEventCallback;
@@ -28,6 +29,9 @@ export class EventHandler {
   /** Holds all events requested by modules, alongside their callbacks */
   private fModuleEventRequests: ModuleEventRequest[] = [];
 
+  /** Holds event last id for unsubscribing */
+  private fEventLastId: number = 0;
+
   /**
    * Allows to subscribe for given event.
    *
@@ -35,12 +39,16 @@ export class EventHandler {
    * @param event event that should be subscribed to
    * @param callback callback that should be executed
    */
-  public subscribe (module: Module, event: typeof Event, callback: TEventCallback): void {
+  public subscribe (module: Module, event: typeof Event, callback: TEventCallback): number {
+    this.fEventLastId += 1;
     this.fModuleEventRequests.push({
       module,
       event,
       callback,
+      id: this.fEventLastId,
     });
+
+    return this.fEventLastId;
   }
 
   /**
@@ -60,4 +68,20 @@ export class EventHandler {
     );
   }
 
+  /**
+   * Unsubscribes given event. Uses eventId returned from subscribtion.
+   *
+   * @param eventId event id received from subscribtion
+   * @return true if event was found and removed, false if not
+   */
+  public unsubscribe (eventId: number): boolean {
+    const eventIndex = this.fModuleEventRequests.findIndex(r => r.id === eventId);
+
+    if (eventIndex > -1) {
+      this.fModuleEventRequests.splice(eventIndex, 1);
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
