@@ -1,7 +1,7 @@
-import { JSR } from '~/JSR';
-import { Greeter } from '~/Greeter';
-import { Rail } from '~/Rail';
-import { Slider } from '~/Slider';
+import { JSR } from '~/JSR/JSR';
+import { Greeter } from '~/Greeter/Greeter';
+import { Rail } from '~/Rail/Rail';
+import { Slider } from '~/Slider/Slider';
 
 JSR.use(Greeter);
 JSR.use(Rail);

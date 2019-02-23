@@ -1,6 +1,6 @@
-import { Config } from '~/Config';
-import { Renderer } from '~/Renderer';
-import { EventHandler } from '~/EventHandler';
+import { Config } from '~/Config/Config';
+import { Renderer } from '~/Renderer/Renderer';
+import { EventHandler } from '~/EventHandler/EventHandler';
 
 export type ModuleConstructor = {
   new (): Module;

@@ -1,6 +1,6 @@
 import { Module } from '~/Module';
-import { Config } from '~/Config';
-import { Renderer, RendererElement } from '~/Renderer';
+import { Config } from '~/Config/Config';
+import { Renderer, RendererElement } from '~/Renderer/Renderer';
 
 /**
  * Test Module whose primary responsibility is greeting users in various way.

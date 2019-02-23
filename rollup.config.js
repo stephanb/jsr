@@ -53,7 +53,7 @@ export default (options) => {
   // Modular
   if (options.configModular) {
     const inputs = jsrModules.map(filename => ({
-      input: `src/${filename}.ts`,
+      input: `src/${filename}/${filename}.ts`,
       output: {
         file: `${outputDir}/${filename}.mjs`,
         format: 'esm',

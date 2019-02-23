@@ -1,7 +1,7 @@
 import { Module } from '~/Module';
-import { Config } from '~/Config';
-import { Renderer, RendererElement } from '~/Renderer';
-import { EventHandler } from '~/EventHandler';
+import { Config } from '~/Config/Config';
+import { Renderer, RendererElement } from '~/Renderer/Renderer';
+import { EventHandler } from '~/EventHandler/EventHandler';
 
 import './Slider.css';
 

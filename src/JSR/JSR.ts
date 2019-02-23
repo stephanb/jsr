@@ -1,7 +1,7 @@
 import { Module, ModuleConstructor } from '~/Module';
-import { IConfig, Config } from '~/Config';
-import { Renderer } from '~/Renderer';
-import { EventHandler } from '~/EventHandler';
+import { IConfig, Config } from '~/Config/Config';
+import { Renderer } from '~/Renderer/Renderer';
+import { EventHandler } from '~/EventHandler/EventHandler';
 
 import './JSR.css';
 

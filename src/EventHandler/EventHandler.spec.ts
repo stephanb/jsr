@@ -1,5 +1,5 @@
 import { MockModule } from '~/mocks/Module';
-import { EventHandler, Event } from '~/EventHandler';
+import { EventHandler, Event } from '~/EventHandler/EventHandler';
 import { Module } from '~/Module';
 
 describe('EventHandler', () => {

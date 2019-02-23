@@ -1,4 +1,4 @@
-import { Renderer, RendererElement } from '~/Renderer';
+import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { ViewportWidthProperty } from 'csstype';
 
 describe('Renderer', () => {
