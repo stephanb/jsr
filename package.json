@@ -9,7 +9,8 @@
     "build:es6": "rollup -c --configProduction --configTarget es6",
     "build:modular": "rollup -c --configProduction --configModular --configTarget es6",
     "dev": "./scripts/cleanTmp.sh && rollup -c -m --watch --configModular --configTarget es6 | live-server --watch=./tmp .",
-    "test:unit": "jest"
+    "test:unit": "jest",
+    "test:lint": "tslint --project ."
   },
   "files": [],
   "main": "./dist/index.js",

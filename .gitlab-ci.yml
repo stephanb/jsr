@@ -1,0 +1,20 @@
+variables:
+  IMAGE: node:latest
+
+stages:
+  - test
+
+before_script:
+  - npm install
+
+unit tests:
+  stage: test
+  image: $IMAGE
+  script:
+    - npm run test:unit
+
+lint:
+  stage: test
+  image: $IMAGE
+  script:
+    - npm run test:lint
