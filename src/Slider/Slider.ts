@@ -5,7 +5,7 @@ import { EventHandler } from '~/EventHandler/EventHandler';
 
 import './Slider.css';
 
-export class Slider extends Module {
+export class Slider implements Module {
   /** Holds all sliders (one per value) */
   private fSliders: RendererElement[] = [];
 
@@ -16,6 +16,9 @@ export class Slider extends Module {
     this.fSliders = sliders;
   }
 
+  /**
+   * Create single slider object.
+   */
   private createSlider (renderer: Renderer): RendererElement {
     return renderer.createElement('div', {
       class: 'jsr_slider',
