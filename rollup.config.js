@@ -6,7 +6,8 @@ import { terser as Terser } from 'rollup-plugin-terser';
 /** List of all modules to be built. Must be contained inside primary `src` directory */
 const jsrModules = [
   'JSR',
-  'Greeter'
+  'Greeter',
+  'Rail'
 ];
 
 export default (options) => {

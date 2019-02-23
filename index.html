@@ -13,10 +13,11 @@
   <script type="module">
     import { JSR } from './tmp/JSR.mjs';
     import { Greeter } from './tmp/Greeter.mjs';
+    import { Rail } from './tmp/Rail.mjs';
 
     new JSR({
       root: document.querySelector('#jsr'),
-      modules: [Greeter],
+      modules: [Greeter, Rail],
     });
   </script>
 </body>
