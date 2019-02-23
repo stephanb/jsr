@@ -3,6 +3,8 @@ import { Config } from '~/Config';
 import { Renderer, RendererElement } from '~/Renderer';
 import { EventHandler } from '~/EventHandler';
 
+import './Rail.css';
+
 export class Rail extends Module {
   public init (config: Config, renderer: Renderer, events: EventHandler) {
     const rail: RendererElement = this.createRail(renderer);

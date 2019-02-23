@@ -1,6 +1,7 @@
 import NodeResolve from 'rollup-plugin-node-resolve';
 import Typescript from 'rollup-plugin-typescript2';
 import BundleSize from 'rollup-plugin-bundle-size';
+import PostCSS from 'rollup-plugin-postcss'
 import { terser as Terser } from 'rollup-plugin-terser';
 
 /** List of all modules to be built. Must be contained inside primary `src` directory */
@@ -16,6 +17,9 @@ export default (options) => {
   // Build list of rollup plugins, leave truthy values
   const rollupPlugins = [
     BundleSize(),
+    PostCSS({
+      extract: true
+    }),
     NodeResolve(),
     Typescript({
       clean: true,
