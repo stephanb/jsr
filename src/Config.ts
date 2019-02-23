@@ -3,6 +3,7 @@ import { ModuleConstructor } from '~/Module';
 export interface IConfig {
   root: HTMLElement;
   modules: ModuleConstructor[];
+  values: number[];
 }
 
 /**
@@ -37,10 +38,10 @@ export class Config {
   }
 
   /**
-   * Returns modules to used in app.
+   * Returns copy of modules to use in app.
    */
   public get modules (): ModuleConstructor[] {
-    return this.fConfig.modules;
+    return this.fConfig.modules.slice();
   }
 
   /**
@@ -48,6 +49,13 @@ export class Config {
    */
   public get rootEl (): HTMLElement {
     return this.fConfig.root;
+  }
+
+  /**
+   * Returns copy of initial values.
+   */
+  public get values (): number[] {
+    return this.fConfig.values.slice();
   }
 
   /**
@@ -64,6 +72,11 @@ export class Config {
 
     if (!(config.root instanceof HTMLElement)) {
       throw new Error('JSR: config.root is not HTMLElement');
+    }
+
+    /** @NOTE .isNaN treats stringified number ('1') as valid number */
+    if (!Array.isArray(config.values) || config.values.length === 0 || config.values.some(v => isNaN(v))) {
+      throw new Error(`JSR: config.values is not array, is empty, or some of the values is not a number`);
     }
 
     return true;
