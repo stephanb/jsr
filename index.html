@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/tmp/Rail.css">
+  <link rel="stylesheet" href="/tmp/Slider.css">
   <title>Document</title>
 </head>
 <body>
@@ -15,10 +16,11 @@
     import { JSR } from './tmp/JSR.mjs';
     import { Greeter } from './tmp/Greeter.mjs';
     import { Rail } from './tmp/Rail.mjs';
+    import { Slider } from './tmp/Slider.mjs';
 
     new JSR({
       root: document.querySelector('#jsr'),
-      modules: [Greeter, Rail],
+      modules: [Greeter, Rail, Slider],
     });
   </script>
 </body>

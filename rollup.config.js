@@ -8,7 +8,8 @@ import { terser as Terser } from 'rollup-plugin-terser';
 const jsrModules = [
   'JSR',
   'Greeter',
-  'Rail'
+  'Rail',
+  'Slider'
 ];
 
 export default (options) => {
