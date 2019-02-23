@@ -42,6 +42,7 @@ describe('JSR', () => {
       const jsr = new JSR({
         root: document.body,
         modules: [MockModule],
+        values: [0, 100],
       });
 
       expect(mockInit).toBeCalledTimes(1);

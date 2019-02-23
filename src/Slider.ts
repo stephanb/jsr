@@ -6,7 +6,19 @@ import { EventHandler } from '~/EventHandler';
 import './Slider.css';
 
 export class Slider extends Module {
+  /** Holds all sliders (one per value) */
+  private fSliders: RendererElement[] = [];
+
   public init (config: Config, renderer: Renderer, events: EventHandler) {
-    /** */
+    const sliders: RendererElement[] = config.values.map(() => this.createSlider(renderer));
+    sliders.forEach(s => renderer.root.addChild(s));
+
+    this.fSliders = sliders;
+  }
+
+  private createSlider (renderer: Renderer): RendererElement {
+    return renderer.createElement('div', {
+      class: 'jsr_slider',
+    });
   }
 }

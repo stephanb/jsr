@@ -3,6 +3,8 @@ import { IConfig, Config } from '~/Config';
 import { Renderer } from '~/Renderer';
 import { EventHandler } from '~/EventHandler';
 
+import './JSR.css';
+
 export class JSR {
   /** Holds collection of available modules to use */
   private static fAvailableModules: ModuleConstructor[] = [];
