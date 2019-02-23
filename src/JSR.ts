@@ -1,6 +1,7 @@
 import { Module, ModuleConstructor } from '~/Module';
 import { IConfig, Config } from '~/Config';
 import { Renderer } from '~/Renderer';
+import { EventHandler } from '~/EventHandler';
 
 export class JSR {
   /** Holds collection of available modules to use */
@@ -14,6 +15,9 @@ export class JSR {
 
   /** Holds Renderer instance */
   private fRenderer: Renderer;
+
+  /** Holds EventHandler instance */
+  private fEventHandler: EventHandler;
 
   /**
    * Returns copy of all available modules to use.
@@ -57,7 +61,8 @@ export class JSR {
     this.fConfig = new Config(config, JSR.fAvailableModules);
     this.fRenderer = new Renderer(this.fConfig.rootEl);
     this.fModules = this.buildModules(this.fConfig.modules);
-    this.initModules(this.fModules, this.fConfig, this.fRenderer);
+    this.fEventHandler = new EventHandler();
+    this.initModules(this.fModules, this.fConfig, this.fRenderer, this.fEventHandler);
   }
 
   /**
@@ -70,8 +75,8 @@ export class JSR {
   /**
    * Initializes modules.
    */
-  private initModules (moduleList: Module[], config: Config, renderer: Renderer): void {
-    moduleList.forEach(module => module.init(config, renderer));
+  private initModules (moduleList: Module[], config: Config, renderer: Renderer, events: EventHandler): void {
+    moduleList.forEach(module => module.init(config, renderer, events));
   }
 
 }
