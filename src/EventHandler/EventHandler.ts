@@ -1,24 +1,37 @@
 import { Module } from '~/Module';
+import { Config } from '~/Config/Config';
 
-interface ModuleEventRequest<T> {
+interface ModuleEventRequest<T extends Event> {
   id: number;
   module: Module;
-  event: TConstructor<T>;
-  callback: TEventCallback<any>;
+  event: TEventConstructor<T>;
+  callback: TEventCallback<T>;
 }
 
-type TConstructor<T> = new () => T;
+type TEventConstructor<T> = {
+  new(config: Config): T,
+};
 
 /**
  * Event class, each event should extend this class.
  */
-export class Event {}
+export class Event {
+  protected fConfig: Config;
+
+  constructor (config: Config) {
+    this.fConfig = config;
+  }
+}
+
+type EventData<T> = {
+  [K in keyof T]: T[K]
+};
 
 /**
  * Event callback, can return either Promise (if async) or void (if sync).
  * Promise is useful if triggerer wants to wait for all callbacks to finish.
  */
-export type TEventCallback<T> = (eventInstance: T) => Promise<void> | void;
+export type TEventCallback<T extends Event> = (eventInstance: T) => Promise<void> | void;
 
 /**
  * Handles events across modular app.
@@ -34,6 +47,13 @@ export class EventHandler {
   /** Holds event last id for unsubscribing */
   private fEventLastId: number = 0;
 
+  /** Holds config instance, passed down to all events later on */
+  private fConfig: Config;
+
+  constructor (config: Config) {
+    this.fConfig = config;
+  }
+
   /**
    * Allows to subscribe for given event.
    *
@@ -41,7 +61,7 @@ export class EventHandler {
    * @param event event that should be subscribed to
    * @param callback callback that should be executed
    */
-  public subscribe<T extends Event> (module: Module, event: TConstructor<T>, callback: TEventCallback<T>): number {
+  public subscribe<T extends Event> (module: Module, event: TEventConstructor<T>, callback: TEventCallback<T>): number {
     this.fEventLastId += 1;
     this.fModuleEventRequests.push({
       module,
@@ -61,12 +81,14 @@ export class EventHandler {
    * @param event event that should be triggered
    * @param data event instance or matching object, that should be evaluated as event value/data
    */
-  public trigger<T extends Event> (module: Module, event: TConstructor<T>, data: T): Promise<void[]> {
+  public trigger<T extends Event> (module: Module, event: TEventConstructor<T>, data: EventData<T>): Promise<void[]> {
+    const instance: T = this.objectToInstance(event, data, this.fConfig);
+
     return Promise.all(
       this.fModuleEventRequests
         .filter((r) => r.module !== module)
         .filter((r) => r.event === event)
-        .map((r) => r.callback(data)),
+        .map((r) => r.callback(instance)),
     );
   }
 
@@ -85,5 +107,22 @@ export class EventHandler {
     } else {
       return false;
     }
+  }
+
+  /**
+   * Converts plain object to given class instance.
+   *
+   * @param constructor constructor of class to be created
+   * @param data data for constructor
+   * @param config config to be passed to event instance
+   */
+  private objectToInstance<T> (constructor: TEventConstructor<T>, data: EventData<T>, config: Config): T {
+    const instance: T = new constructor(config);
+
+    for (const key in data) {
+      instance[key] = data[key];
+    }
+
+    return instance;
   }
 }

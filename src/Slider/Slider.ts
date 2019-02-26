@@ -9,6 +9,7 @@ import { TValueRatio } from '~/types';
 import { EValueChange } from '~/events/EValueChange';
 
 export class Slider implements Module {
+
   /** Holds all sliders (one per value) */
   private fSliders: RendererElement[] = [];
 
@@ -20,6 +21,15 @@ export class Slider implements Module {
     this.fSliders = sliders;
 
     this.initEvents(events);
+  }
+
+  /**
+   * Sets position on all sliders, according to given ratio values.
+   *
+   * @param values set of ratio values to use
+   */
+  private setAllSliderPositions (values: TValueRatio[]): void {
+    values.forEach((value, index) => this.setSliderPosition(this.fSliders[index], value));
   }
 
   /**
@@ -43,12 +53,13 @@ export class Slider implements Module {
     });
   }
 
+  /**
+   * Inits listening for certain events
+   *
+   * @param events events handler
+   */
   private initEvents (events: EventHandler): void {
     // On value change set values to sliders
-    events.subscribe(this, EValueChange, (e) => {
-      e.ratioValues.forEach((value, index) => this.setSliderPosition(
-        this.fSliders[index], value),
-      );
-    });
+    events.subscribe(this, EValueChange, (e) => this.setAllSliderPositions(e.ratioValues));
   }
 }
