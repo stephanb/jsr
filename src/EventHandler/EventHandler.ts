@@ -1,7 +1,7 @@
 import { Module } from '~/Module';
 import { Config } from '~/Config/Config';
 
-interface ModuleEventRequest<T extends Event> {
+interface ModuleEventRequest<T> {
   id: number;
   module: Module;
   event: TEventConstructor<T>;
@@ -11,6 +11,16 @@ interface ModuleEventRequest<T extends Event> {
 type TEventConstructor<T> = {
   new(config: Config): T,
 };
+
+type EventData<T> = {
+  [K in keyof T]: T[K]
+};
+
+/**
+ * Event callback, can return either Promise (if async) or void (if sync).
+ * Promise is useful if triggerer wants to wait for all callbacks to finish.
+ */
+type TEventCallback<T> = (eventInstance: T) => Promise<void> | void;
 
 /**
  * Event class, each event should extend this class.
@@ -22,16 +32,6 @@ export class Event {
     this.fConfig = config;
   }
 }
-
-type EventData<T> = {
-  [K in keyof T]: T[K]
-};
-
-/**
- * Event callback, can return either Promise (if async) or void (if sync).
- * Promise is useful if triggerer wants to wait for all callbacks to finish.
- */
-export type TEventCallback<T extends Event> = (eventInstance: T) => Promise<void> | void;
 
 /**
  * Handles events across modular app.
@@ -66,7 +66,7 @@ export class EventHandler {
     this.fModuleEventRequests.push({
       module,
       event,
-      callback,
+      callback: callback as TEventCallback<Event>,
       id: this.fEventLastId,
     });
 

@@ -1,14 +1,20 @@
 import { MockModule } from '~/mocks/Module';
 import { EventHandler, Event } from '~/EventHandler/EventHandler';
 import { Module } from '~/Module';
+import { Config } from '~/Config/Config';
 
 describe('EventHandler', () => {
   let eventHandler: EventHandler;
   const module1: Module = new MockModule();
   const module2: Module = new MockModule();
+  const config: Config = new Config({
+    root: document.documentElement,
+    modules: [],
+    values: [0],
+  }, []);
 
   beforeEach(() => {
-    eventHandler = new EventHandler();
+    eventHandler = new EventHandler(config);
   });
 
   describe('.subscribe', () => {
@@ -21,10 +27,10 @@ describe('EventHandler', () => {
       ];
 
       // Expect only one copy of each value in array, which means there are no dupes
-      expect(results.filter(r => r === results[0]).length).toBe(1);
-      expect(results.filter(r => r === results[1]).length).toBe(1);
-      expect(results.filter(r => r === results[2]).length).toBe(1);
-      expect(results.filter(r => r === results[3]).length).toBe(1);
+      expect(results.filter((r) => r === results[0]).length).toBe(1);
+      expect(results.filter((r) => r === results[1]).length).toBe(1);
+      expect(results.filter((r) => r === results[2]).length).toBe(1);
+      expect(results.filter((r) => r === results[3]).length).toBe(1);
     });
   });
 
@@ -36,7 +42,7 @@ describe('EventHandler', () => {
       eventHandler.subscribe(module1, Event, fn);
       eventHandler.trigger(module2, Event, arg).then(() => {
         expect(fn).toBeCalledTimes(1);
-        expect(fn).toBeCalledWith(arg);
+        expect(fn.mock.calls[0][0]).toBeInstanceOf(Event);
         done();
       });
     });

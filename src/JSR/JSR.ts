@@ -63,7 +63,7 @@ export class JSR {
     this.fConfig = new Config(config, JSR.fAvailableModules);
     this.fRenderer = new Renderer(this.fConfig.rootEl);
     this.fModules = this.buildModules(this.fConfig.modules);
-    this.fEventHandler = new EventHandler();
+    this.fEventHandler = new EventHandler(this.fConfig);
     this.initModules(this.fModules, this.fConfig, this.fRenderer, this.fEventHandler);
   }
 
@@ -71,14 +71,14 @@ export class JSR {
    * Converts modules' constructors into their instances.
    */
   private buildModules (constructorList: ModuleConstructor[]): Module[] {
-    return constructorList.map(moduleConstructor => new moduleConstructor());
+    return constructorList.map((moduleConstructor) => new moduleConstructor());
   }
 
   /**
    * Initializes modules.
    */
   private initModules (moduleList: Module[], config: Config, renderer: Renderer, events: EventHandler): void {
-    moduleList.forEach(module => module.init(config, renderer, events));
+    moduleList.forEach((module) => module.init(config, renderer, events));
   }
 
 }

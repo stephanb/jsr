@@ -4,7 +4,7 @@ import { TValueReal } from '~/types';
 export interface IConfig {
   root: HTMLElement;
   modules: ModuleConstructor[];
-  values: TValueReal[];
+  values: number[];
 }
 
 /**
@@ -56,7 +56,7 @@ export class Config {
    * Returns copy of initial values.
    */
   public get values (): TValueReal[] {
-    return this.fConfig.values.slice();
+    return this.fConfig.values.slice() as TValueReal[];
   }
 
   /**
