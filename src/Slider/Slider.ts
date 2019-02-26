@@ -13,7 +13,7 @@ export class Slider implements Module {
   /** Holds all sliders (one per value) */
   private fSliders: RendererElement[] = [];
 
-  public init (config: Config, renderer: Renderer, events: EventHandler) {
+  public init (config: Config, renderer: Renderer, events: EventHandler): void {
     const sliders: RendererElement[] = config.values.map(() => this.createSlider(renderer));
 
     sliders.forEach((s) => renderer.root.addChild(s));

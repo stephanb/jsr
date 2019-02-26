@@ -13,7 +13,7 @@ type TEventConstructor<T> = {
 };
 
 type EventData<T> = {
-  [K in keyof T]: T[K]
+  [K in keyof T]?: T[K]
 };
 
 /**
@@ -81,7 +81,9 @@ export class EventHandler {
    * @param event event that should be triggered
    * @param data event instance or matching object, that should be evaluated as event value/data
    */
-  public trigger<T extends Event> (module: Module, event: TEventConstructor<T>, data: EventData<T>): Promise<void[]> {
+  public trigger<T extends Event> (
+    module: Module | null, event: TEventConstructor<T>, data: EventData<T>,
+  ): Promise<void[]> {
     const instance: T = this.objectToInstance(event, data, this.fConfig);
 
     return Promise.all(
@@ -120,7 +122,7 @@ export class EventHandler {
     const instance: T = new constructor(config);
 
     for (const key in data) {
-      instance[key] = data[key];
+      instance[key] = data[key] as any;
     }
 
     return instance;

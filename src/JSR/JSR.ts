@@ -4,6 +4,7 @@ import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 
 import './JSR.css';
+import { EValueChange } from '~/events/EValueChange';
 
 export class JSR {
   /** Holds collection of available modules to use */
@@ -65,6 +66,7 @@ export class JSR {
     this.fModules = this.buildModules(this.fConfig.modules);
     this.fEventHandler = new EventHandler(this.fConfig);
     this.initModules(this.fModules, this.fConfig, this.fRenderer, this.fEventHandler);
+    this.initApplication(this.fConfig, this.fEventHandler);
   }
 
   /**
@@ -81,4 +83,12 @@ export class JSR {
     moduleList.forEach((module) => module.init(config, renderer, events));
   }
 
+  /**
+   * Inits application by calling necessary methods and initializers
+   */
+  private initApplication (config: Config, events: EventHandler): void {
+    events.trigger(null, EValueChange, {
+      realValues: config.values,
+    });
+  }
 }

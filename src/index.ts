@@ -8,4 +8,4 @@ JSR.use(Rail);
 JSR.use(Slider);
 
 export default JSR;
-export { Greeter };
+export { Greeter, Rail, Slider };
