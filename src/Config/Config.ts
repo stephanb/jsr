@@ -1,9 +1,10 @@
 import { ModuleConstructor } from '~/Module';
+import { TValueReal } from '~/types';
 
 export interface IConfig {
   root: HTMLElement;
   modules: ModuleConstructor[];
-  values: number[];
+  values: TValueReal[];
 }
 
 /**
@@ -54,7 +55,7 @@ export class Config {
   /**
    * Returns copy of initial values.
    */
-  public get values (): number[] {
+  public get values (): TValueReal[] {
     return this.fConfig.values.slice();
   }
 
@@ -75,7 +76,7 @@ export class Config {
     }
 
     /** @NOTE .isNaN treats stringified number ('1') as valid number */
-    if (!Array.isArray(config.values) || config.values.length === 0 || config.values.some(v => isNaN(v))) {
+    if (!Array.isArray(config.values) || config.values.length === 0 || config.values.some((v) => isNaN(v))) {
       throw new Error(`JSR: config.values is not array, is empty, or some of the values is not a number`);
     }
 
