@@ -5,6 +5,8 @@ export interface IConfig {
   root: HTMLElement;
   modules: ModuleConstructor[];
   values: number[];
+  min: number;
+  max: number;
 }
 
 /**
@@ -36,6 +38,20 @@ export class Config {
 
     // Lock config
     Object.freeze(this.fConfig);
+  }
+
+  /**
+   * Returns minimal value from scale
+   */
+  public get min (): number {
+    return this.fConfig.min;
+  }
+
+  /**
+   * Returns maximum value from scale
+   */
+  public get max (): number {
+    return this.fConfig.max;
   }
 
   /**
@@ -73,6 +89,10 @@ export class Config {
 
     if (!(config.root instanceof HTMLElement)) {
       throw new Error('JSR: config.root is not HTMLElement');
+    }
+
+    if (isNaN(config.min) || isNaN(config.max)) {
+      throw new Error('JSR: config.min or config.max is not a valid number');
     }
 
     /** @NOTE .isNaN treats stringified number ('1') as valid number */

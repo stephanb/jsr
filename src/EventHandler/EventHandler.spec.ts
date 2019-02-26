@@ -11,6 +11,8 @@ describe('EventHandler', () => {
     root: document.documentElement,
     modules: [],
     values: [0],
+    min: 0,
+    max: 100,
   }, []);
 
   beforeEach(() => {
