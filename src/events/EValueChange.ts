@@ -1,11 +1,11 @@
-import { Event } from '~/EventHandler/EventHandler';
 import { TValueRatio, TValueReal } from '~/types';
 import { ratioToReal, realToRatio } from '~/helpers/values';
+import { SystemEvent } from '~/EventHandler/SystemEvent';
 
 /**
  * Emits complete set of values if any of them changes
  */
-export class EValueChange extends Event {
+export class EValueChange extends SystemEvent {
   private fRatioValues: TValueRatio[];
   private fRealValues: TValueReal[];
 

@@ -1,5 +1,7 @@
 import { Module } from '~/Module';
 import { Config } from '~/Config/Config';
+import { EValueChange } from '~/events/EValueChange';
+import { SystemEvent } from '~/EventHandler/SystemEvent';
 
 interface ModuleEventRequest<T> {
   id: number;
@@ -23,17 +25,6 @@ type EventData<T> = {
 type TEventCallback<T> = (eventInstance: T) => Promise<void> | void;
 
 /**
- * Event class, each event should extend this class.
- */
-export class Event {
-  protected fConfig: Config;
-
-  constructor (config: Config) {
-    this.fConfig = config;
-  }
-}
-
-/**
  * Handles events across modular app.
  * Because both `.subscribe` and `.trigger` methods requires to provide them with modules,
  * that execute the function, `.tiggering` event does not executes subscriptions
@@ -42,13 +33,19 @@ export class Event {
 export class EventHandler {
 
   /** Holds all events requested by modules, alongside their callbacks */
-  private fModuleEventRequests: ModuleEventRequest<Event>[] = [];
+  private fModuleEventRequests: ModuleEventRequest<SystemEvent>[] = [];
 
   /** Holds event last id for unsubscribing */
   private fEventLastId: number = 0;
 
   /** Holds config instance, passed down to all events later on */
   private fConfig: Config;
+
+  /** List of events. Allows injection. Important for proper typing is to NOT set events variable type */
+  public event = {
+    SystemEvent: SystemEvent,
+    EValueChange: EValueChange,
+  };
 
   constructor (config: Config) {
     this.fConfig = config;
@@ -61,12 +58,14 @@ export class EventHandler {
    * @param event event that should be subscribed to
    * @param callback callback that should be executed
    */
-  public subscribe<T extends Event> (module: Module, event: TEventConstructor<T>, callback: TEventCallback<T>): number {
+  public subscribe<T extends SystemEvent> (
+    module: Module, event: TEventConstructor<T>, callback: TEventCallback<T>,
+  ): number {
     this.fEventLastId += 1;
     this.fModuleEventRequests.push({
       module,
       event,
-      callback: callback as TEventCallback<Event>,
+      callback: callback as TEventCallback<SystemEvent>,
       id: this.fEventLastId,
     });
 
@@ -81,7 +80,7 @@ export class EventHandler {
    * @param event event that should be triggered
    * @param data event instance or matching object, that should be evaluated as event value/data
    */
-  public trigger<T extends Event> (
+  public trigger<T extends SystemEvent> (
     module: Module | null, event: TEventConstructor<T>, data: EventData<T>,
   ): Promise<void[]> {
     const instance: T = this.objectToInstance(event, data, this.fConfig);

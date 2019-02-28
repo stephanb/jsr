@@ -2,9 +2,7 @@ import { Module, ModuleConstructor } from '~/Module';
 import { IConfig, Config } from '~/Config/Config';
 import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
-
 import './JSR.css';
-import { EValueChange } from '~/events/EValueChange';
 
 export class JSR {
   /** Holds collection of available modules to use */
@@ -87,7 +85,7 @@ export class JSR {
    * Inits application by calling necessary methods and initializers
    */
   private initApplication (config: Config, events: EventHandler): void {
-    events.trigger(null, EValueChange, {
+    events.trigger(null, events.event.EValueChange, {
       realValues: config.values,
     });
   }

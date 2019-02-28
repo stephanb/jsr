@@ -1,5 +1,5 @@
 import { MockModule } from '~/mocks/Module';
-import { EventHandler, Event } from '~/EventHandler/EventHandler';
+import { EventHandler } from '~/EventHandler/EventHandler';
 import { Module } from '~/Module';
 import { Config } from '~/Config/Config';
 
@@ -22,10 +22,10 @@ describe('EventHandler', () => {
   describe('.subscribe', () => {
     it('should return new id every time event is subscribed', () => {
       const results: number[] = [
-        eventHandler.subscribe(module1, Event, jest.fn()),
-        eventHandler.subscribe(module1, Event, jest.fn()),
-        eventHandler.subscribe(module2, Event, jest.fn()),
-        eventHandler.subscribe(module2, Event, jest.fn()),
+        eventHandler.subscribe(module1, eventHandler.event.SystemEvent, jest.fn()),
+        eventHandler.subscribe(module1, eventHandler.event.SystemEvent, jest.fn()),
+        eventHandler.subscribe(module2, eventHandler.event.SystemEvent, jest.fn()),
+        eventHandler.subscribe(module2, eventHandler.event.SystemEvent, jest.fn()),
       ];
 
       // Expect only one copy of each value in array, which means there are no dupes
@@ -41,10 +41,10 @@ describe('EventHandler', () => {
       const fn = jest.fn();
       const arg = {};
 
-      eventHandler.subscribe(module1, Event, fn);
-      eventHandler.trigger(module2, Event, arg).then(() => {
+      eventHandler.subscribe(module1, eventHandler.event.SystemEvent, fn);
+      eventHandler.trigger(module2, eventHandler.event.SystemEvent, arg).then(() => {
         expect(fn).toBeCalledTimes(1);
-        expect(fn.mock.calls[0][0]).toBeInstanceOf(Event);
+        expect(fn.mock.calls[0][0]).toBeInstanceOf(eventHandler.event.SystemEvent);
         done();
       });
     });
@@ -52,8 +52,8 @@ describe('EventHandler', () => {
     it('should not trigger callback of its own module', (done) => {
       const fn = jest.fn();
 
-      eventHandler.subscribe(module1, Event, fn);
-      eventHandler.trigger(module1, Event, {}).then(() => {
+      eventHandler.subscribe(module1, eventHandler.event.SystemEvent, fn);
+      eventHandler.trigger(module1, eventHandler.event.SystemEvent, {}).then(() => {
         expect(fn).toBeCalledTimes(0);
         done();
       });
@@ -65,9 +65,9 @@ describe('EventHandler', () => {
       const fn1: () => Promise<void> = () => new Promise((resolve) => setTimeout(() => (jestFn1(), resolve()), 50));
       const fn2: () => Promise<void> = () => new Promise((resolve) => setTimeout(() => (jestFn2(), resolve()), 150));
 
-      eventHandler.subscribe(module1, Event, fn1);
-      eventHandler.subscribe(module1, Event, fn2);
-      eventHandler.trigger(module2, Event, {}).then(() => {
+      eventHandler.subscribe(module1, eventHandler.event.SystemEvent, fn1);
+      eventHandler.subscribe(module1, eventHandler.event.SystemEvent, fn2);
+      eventHandler.trigger(module2, eventHandler.event.SystemEvent, {}).then(() => {
         expect(jestFn1).toBeCalledTimes(1);
         expect(jestFn2).toBeCalledTimes(1);
         done();
@@ -78,11 +78,11 @@ describe('EventHandler', () => {
   describe('.unsubscribe', () => {
     it('should unsubscribe and trigger should not work', (done) => {
       const jestFn = jest.fn();
-      const subscribtionId: number = eventHandler.subscribe(module1, Event, jestFn);
+      const subscribtionId: number = eventHandler.subscribe(module1, eventHandler.event.SystemEvent, jestFn);
 
       eventHandler.unsubscribe(subscribtionId);
 
-      eventHandler.trigger(module2, Event, {}).then(() => {
+      eventHandler.trigger(module2, eventHandler.event.SystemEvent, {}).then(() => {
         expect(jestFn).toBeCalledTimes(0);
         done();
       });

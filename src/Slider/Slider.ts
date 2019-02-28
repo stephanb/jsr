@@ -2,11 +2,9 @@ import { Module } from '~/Module';
 import { Config } from '~/Config/Config';
 import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
-
-import './Slider.css';
 import { ratioToPercent } from '~/helpers/styles';
 import { TValueRatio } from '~/types';
-import { EValueChange } from '~/events/EValueChange';
+import './Slider.css';
 
 export class Slider implements Module {
 
@@ -60,6 +58,6 @@ export class Slider implements Module {
    */
   private initEvents (events: EventHandler): void {
     // On value change set values to sliders
-    events.subscribe(this, EValueChange, (e) => this.setAllSliderPositions(e.ratioValues));
+    events.subscribe(this, events.event.EValueChange, (e) => this.setAllSliderPositions(e.ratioValues));
   }
 }
