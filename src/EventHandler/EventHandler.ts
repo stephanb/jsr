@@ -6,7 +6,7 @@ import { SystemEvent } from '~/EventHandler/SystemEvent';
 interface ModuleEventRequest<T> {
   id: number;
   module: Module;
-  event: TEventConstructor<T>;
+  event: T;
   callback: TEventCallback<T>;
 }
 
@@ -41,14 +41,19 @@ export class EventHandler {
   /** Holds config instance, passed down to all events later on */
   private fConfig: Config;
 
-  /** List of events. Allows injection. Important for proper typing is to NOT set events variable type */
-  public event = {
+  /** List of events. Allows injection. Values are set in constructor */
+  public event: {
     SystemEvent: SystemEvent,
     EValueChange: EValueChange,
   };
 
   constructor (config: Config) {
     this.fConfig = config;
+
+    this.event = {
+      SystemEvent: new SystemEvent(this.fConfig),
+      EValueChange: new EValueChange(this.fConfig),
+    };
   }
 
   /**
@@ -59,7 +64,7 @@ export class EventHandler {
    * @param callback callback that should be executed
    */
   public subscribe<T extends SystemEvent> (
-    module: Module, event: TEventConstructor<T>, callback: TEventCallback<T>,
+    module: Module, event: T, callback: TEventCallback<T>,
   ): number {
     this.fEventLastId += 1;
     this.fModuleEventRequests.push({
@@ -81,9 +86,9 @@ export class EventHandler {
    * @param data event instance or matching object, that should be evaluated as event value/data
    */
   public trigger<T extends SystemEvent> (
-    module: Module | null, event: TEventConstructor<T>, data: EventData<T>,
+    module: Module | null, event: T, data: EventData<T>,
   ): Promise<void[]> {
-    const instance: T = this.objectToInstance(event, data, this.fConfig);
+    const instance: T = this.assignValues(event, data, this.fConfig);
 
     return Promise.all(
       this.fModuleEventRequests
@@ -111,19 +116,17 @@ export class EventHandler {
   }
 
   /**
-   * Converts plain object to given class instance.
+   * Assign values from plain object to instance
    *
-   * @param constructor constructor of class to be created
+   * @param event instance of class to be updated
    * @param data data for constructor
    * @param config config to be passed to event instance
    */
-  private objectToInstance<T> (constructor: TEventConstructor<T>, data: EventData<T>, config: Config): T {
-    const instance: T = new constructor(config);
-
+  private assignValues<T> (event: T, data: EventData<T>, config: Config): T {
     for (const key in data) {
-      instance[key] = data[key] as any;
+      event[key] = data[key] as any;
     }
 
-    return instance;
+    return event;
   }
 }

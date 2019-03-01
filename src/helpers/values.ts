@@ -27,7 +27,7 @@ export function ratioToReal (min: number, max: number, value: TValueRatio): TVal
  * @param valueSet set of values to look for
  * @param value value to check against
  */
-export function getClosestValueIndex<T extends number> (valueSet: T[], value: T): number {
+export function findClosestValueIndex<T extends number> (valueSet: T[], value: T): number {
   return valueSet.reduce(
     (closestIndex, curValue, index, set) =>
       (Math.abs(curValue - value) < Math.abs(set[closestIndex] - value)) ? index : closestIndex,

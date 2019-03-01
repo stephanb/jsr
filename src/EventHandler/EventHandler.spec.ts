@@ -44,7 +44,7 @@ describe('EventHandler', () => {
       eventHandler.subscribe(module1, eventHandler.event.SystemEvent, fn);
       eventHandler.trigger(module2, eventHandler.event.SystemEvent, arg).then(() => {
         expect(fn).toBeCalledTimes(1);
-        expect(fn.mock.calls[0][0]).toBeInstanceOf(eventHandler.event.SystemEvent);
+        expect(fn.mock.calls[0][0]).toBe(eventHandler.event.SystemEvent);
         done();
       });
     });

@@ -36,7 +36,7 @@ export class Rail implements Module {
       const ratio: TValueRatio = clickRelative / rect.width as TValueRatio;
 
       events.trigger(this, events.event.EValueChange, {
-        // ratioValues: ,
+        singleRatioValue: ratio,
       });
     });
   }

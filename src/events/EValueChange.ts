@@ -1,5 +1,5 @@
 import { TValueRatio, TValueReal } from '~/types';
-import { ratioToReal, realToRatio } from '~/helpers/values';
+import { ratioToReal, realToRatio, findClosestValueIndex } from '~/helpers/values';
 import { SystemEvent } from '~/EventHandler/SystemEvent';
 
 /**
@@ -37,5 +37,17 @@ export class EValueChange extends SystemEvent {
   public set ratioValues (values: TValueRatio[]) {
     this.fRatioValues = values;
     this.fRealValues = values.map((value) => ratioToReal(this.fConfig.min, this.fConfig.max, value));
+  }
+
+  /**
+   * Allows to set single ratio value.
+   * It automagically find closest value to given value, and sets it.
+   */
+  public set singleRatioValue (value: TValueRatio) {
+    const closestValueIndex: number = findClosestValueIndex(this.fRatioValues, value);
+    const newValues: TValueRatio[] = this.fRatioValues.slice();
+    newValues[closestValueIndex] = value;
+
+    this.ratioValues = newValues;
   }
 }
