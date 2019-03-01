@@ -20,3 +20,17 @@ export function realToRatio (min: number, max: number, value: TValueReal): TValu
 export function ratioToReal (min: number, max: number, value: TValueRatio): TValueReal {
   return ((max - min) * value + min) as TValueReal;
 }
+
+/**
+ * Returns index of value from set, that is closest to given value
+ *
+ * @param valueSet set of values to look for
+ * @param value value to check against
+ */
+export function getClosestValueIndex<T extends number> (valueSet: T[], value: T): number {
+  return valueSet.reduce(
+    (closestIndex, curValue, index, set) =>
+      (Math.abs(curValue - value) < Math.abs(set[closestIndex] - value)) ? index : closestIndex,
+    0,
+  );
+}
