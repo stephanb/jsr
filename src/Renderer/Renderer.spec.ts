@@ -33,7 +33,7 @@ describe('Renderer', () => {
 describe('RendererElement', () => {
   /** rAF Promise wrapper */
   const rAF: () => Promise<number> = () => {
-    return new Promise(resolve => requestAnimationFrame(resolve));
+    return new Promise((resolve) => requestAnimationFrame(resolve));
   };
 
   describe('element getter', () => {
