@@ -10,10 +10,6 @@ interface ModuleEventRequest<T> {
   callback: TEventCallback<T>;
 }
 
-type TEventConstructor<T> = {
-  new(config: Config): T,
-};
-
 type EventData<T> = {
   [K in keyof T]?: T[K]
 };
@@ -22,7 +18,7 @@ type EventData<T> = {
  * Event callback, can return either Promise (if async) or void (if sync).
  * Promise is useful if triggerer wants to wait for all callbacks to finish.
  */
-type TEventCallback<T> = (eventInstance: T) => Promise<void> | void;
+type TEventCallback<T> = (eventInstance: Readonly<T>) => Promise<void> | void;
 
 /**
  * Handles events across modular app.
