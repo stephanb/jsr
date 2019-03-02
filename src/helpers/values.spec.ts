@@ -1,4 +1,4 @@
-import { findClosestValueIndex, realToRatio, ratioToReal, correctIntersectingValues, rewriteRatioValues } from '~/helpers/values';
+import { findClosestValueIndex, realToRatio, ratioToReal, rewriteRatioValues } from '~/helpers/values';
 import { TValueReal, TValueRatio } from '~/types';
 
 describe('helpers/values', () => {

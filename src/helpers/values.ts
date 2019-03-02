@@ -42,5 +42,5 @@ export function findClosestValueIndex<T extends number> (valueSet: T[], value: T
  * @param target array of values to be filled
  */
 export function rewriteRatioValues (source: TValueRatio[], target: TValueRatio[]): TValueRatio[] {
-
+  return [];
 }
