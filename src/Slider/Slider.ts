@@ -18,7 +18,7 @@ export class Slider implements Module {
 
     this.fSliders = sliders;
 
-    this.initEvents(events);
+    this.initEvents(renderer, events, sliders);
   }
 
   /**
@@ -56,8 +56,62 @@ export class Slider implements Module {
    *
    * @param events events handler
    */
-  private initEvents (events: EventHandler): void {
+  private initEvents (renderer: Renderer, events: EventHandler, sliders: RendererElement[]): void {
     // On value change set values to sliders
     events.subscribe(this, events.event.EValueChange, (e) => this.setAllSliderPositions(e.ratioValues));
+
+    // For each slider add support for mousedown event
+    sliders.forEach((slider) => {
+      slider.element.addEventListener('mousedown', (mouseDownEvent) => {
+        this.handleSliderDown(renderer, events, mouseDownEvent);
+      });
+    });
+  }
+
+  /**
+   * Handles mousedown on slider.
+   */
+  private handleSliderDown (renderer: Renderer, events: EventHandler, mouseDownEvent: MouseEvent): void {
+    const eventTarget = mouseDownEvent.target;
+
+    if (
+      !eventTarget ||
+      !(eventTarget instanceof Element) ||
+      !eventTarget.classList.contains('jsr_slider')
+    ) {
+      return;
+    }
+
+    mouseDownEvent.stopPropagation();
+    this.handleSliderMove(renderer, events);
+  }
+
+  /**
+   * Handles slider move event.
+   */
+  private handleSliderMove (renderer: Renderer, events: EventHandler): void {
+    // Get root rect
+    const rect: ClientRect = renderer.root.element.getBoundingClientRect();
+
+    // Handle mouse move (count value and trigger update)
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const moveX: number = moveEvent.clientX;
+      const moveRelative: number = moveX - rect.left;
+      const ratio: TValueRatio = moveRelative / rect.width as TValueRatio;
+
+      events.trigger(null, events.event.EValueChange, {
+        singleRatioValue: ratio,
+      });
+    };
+
+    // Handle mouse up (unbind any events)
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    // Add events
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
   }
 }
