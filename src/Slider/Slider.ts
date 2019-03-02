@@ -5,6 +5,7 @@ import { EventHandler } from '~/EventHandler/EventHandler';
 import { ratioToPercent } from '~/helpers/styles';
 import { TValueRatio } from '~/types';
 import './Slider.css';
+import { throttle } from '~/helpers/timing';
 
 export class Slider implements Module {
 
@@ -101,7 +102,8 @@ export class Slider implements Module {
     const values: TValueRatio[] = (new Array(this.fSliders.length)).fill(null);
 
     // Handle mouse move (count value and trigger update)
-    const handleMouseMove = (moveEvent: MouseEvent) => {
+    const handleMouseMove = throttle(20, (moveEvent: MouseEvent) => {
+      console.log(performance.now());
       const moveX: number = moveEvent.clientX;
       const moveRelative: number = moveX - rect.left;
       const ratio: TValueRatio = moveRelative / rect.width as TValueRatio;
@@ -110,7 +112,7 @@ export class Slider implements Module {
       this.fEvents.trigger(null, this.fEvents.event.EValueChange, {
         ratioValues: values,
       });
-    };
+    });
 
     // Handle mouse up (unbind any events)
     const handleMouseUp = () => {
