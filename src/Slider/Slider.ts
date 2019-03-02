@@ -11,14 +11,20 @@ export class Slider implements Module {
   /** Holds all sliders (one per value) */
   private fSliders: RendererElement[] = [];
 
+  private fConfig: Config;
+  private fRenderer: Renderer;
+  private fEvents: EventHandler;
+
   public init (config: Config, renderer: Renderer, events: EventHandler): void {
-    const sliders: RendererElement[] = config.values.map(() => this.createSlider(renderer));
+    this.fConfig = config;
+    this.fRenderer = renderer;
+    this.fEvents = events;
 
-    sliders.forEach((s) => renderer.root.addChild(s));
-
+    const sliders: RendererElement[] = config.values.map(() => this.createSlider());
     this.fSliders = sliders;
 
-    this.initEvents(renderer, events, sliders);
+    sliders.forEach((s) => renderer.root.addChild(s));
+    this.initEvents();
   }
 
   /**
@@ -45,8 +51,8 @@ export class Slider implements Module {
   /**
    * Create single slider object.
    */
-  private createSlider (renderer: Renderer): RendererElement {
-    return renderer.createElement('div', {
+  private createSlider (): RendererElement {
+    return this.fRenderer.createElement('div', {
       class: 'jsr_slider',
     });
   }
@@ -56,14 +62,14 @@ export class Slider implements Module {
    *
    * @param events events handler
    */
-  private initEvents (renderer: Renderer, events: EventHandler, sliders: RendererElement[]): void {
+  private initEvents (): void {
     // On value change set values to sliders
-    events.subscribe(this, events.event.EValueChange, (e) => this.setAllSliderPositions(e.ratioValues));
+    this.fEvents.subscribe(this, this.fEvents.event.EValueChange, (e) => this.setAllSliderPositions(e.ratioValues));
 
     // For each slider add support for mousedown event
-    sliders.forEach((slider) => {
+    this.fSliders.forEach((slider, index) => {
       slider.element.addEventListener('mousedown', (mouseDownEvent) => {
-        this.handleSliderDown(renderer, events, mouseDownEvent);
+        this.handleSliderDown(mouseDownEvent, index);
       });
     });
   }
@@ -71,7 +77,7 @@ export class Slider implements Module {
   /**
    * Handles mousedown on slider.
    */
-  private handleSliderDown (renderer: Renderer, events: EventHandler, mouseDownEvent: MouseEvent): void {
+  private handleSliderDown (mouseDownEvent: MouseEvent, index: number): void {
     const eventTarget = mouseDownEvent.target;
 
     if (
@@ -83,24 +89,26 @@ export class Slider implements Module {
     }
 
     mouseDownEvent.stopPropagation();
-    this.handleSliderMove(renderer, events);
+    this.handleSliderMove(index);
   }
 
   /**
    * Handles slider move event.
    */
-  private handleSliderMove (renderer: Renderer, events: EventHandler): void {
+  private handleSliderMove (index: number): void {
     // Get root rect
-    const rect: ClientRect = renderer.root.element.getBoundingClientRect();
+    const rect: ClientRect = this.fRenderer.root.element.getBoundingClientRect();
+    const values: TValueRatio[] = (new Array(this.fSliders.length)).fill(null);
 
     // Handle mouse move (count value and trigger update)
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const moveX: number = moveEvent.clientX;
       const moveRelative: number = moveX - rect.left;
       const ratio: TValueRatio = moveRelative / rect.width as TValueRatio;
+      values[index] = ratio;
 
-      events.trigger(null, events.event.EValueChange, {
-        singleRatioValue: ratio,
+      this.fEvents.trigger(null, this.fEvents.event.EValueChange, {
+        ratioValues: values,
       });
     };
 
