@@ -102,7 +102,7 @@ export class Slider implements Module {
     const values: TValueRatio[] = (new Array(this.fSliders.length)).fill(null);
 
     // Handle mouse move (count value and trigger update)
-    const handleMouseMove = throttle(20, (moveEvent: MouseEvent) => {
+    const handleMouseMove = throttle(10, (moveEvent: MouseEvent) => {
       console.log(performance.now());
       const moveX: number = moveEvent.clientX;
       const moveRelative: number = moveX - rect.left;
