@@ -1,4 +1,4 @@
-import { findClosestValueIndex, realToRatio, ratioToReal } from '~/helpers/values';
+import { findClosestValueIndex, realToRatio, ratioToReal, correctIntersectingValues, rewriteRatioValues } from '~/helpers/values';
 import { TValueReal, TValueRatio } from '~/types';
 
 describe('helpers/values', () => {
@@ -31,6 +31,32 @@ describe('helpers/values', () => {
       expect(ratioToReal(0, 100, 0.5 as TValueRatio)).toBeCloseTo(50);
       expect(ratioToReal(0, 1, 0.5 as TValueRatio)).toBeCloseTo(0.5);
       expect(ratioToReal(0, 100, 2 as TValueRatio)).toBeCloseTo(200);
+    });
+  });
+
+  describe('rewriteRatioValues', () => {
+    it('should rewrite values to non numeric fields', () => {
+      const test1 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, 0.7, null] as TValueRatio[]);
+      const test2 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, null, null] as any as TValueRatio[]);
+      const test3 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [0.1, 0.7, null] as TValueRatio[]);
+      const test4 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
+
+      expect(test1).toEqual([0, 0.7, 1]);
+      expect(test2).toEqual([0, 0.5, 1]);
+      expect(test3).toEqual([0.1, 0.7, 1]);
+      expect(test4).toEqual([0.3, 0.7, 0.9]);
+    });
+
+    it('should rewrite values and correct invalid neighbour values relations', () => {
+      const test1 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [null, 0.2, null] as TValueRatio[]);
+      const test2 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [null, 0.8, null] as TValueRatio[]);
+      const test3 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [0.8, 0.6, null] as TValueRatio[]);
+      const test4 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
+
+      expect(test1).toEqual([0.3, 0.3, 0.7]);
+      expect(test2).toEqual([0.3, 0.7, 0.7]);
+      expect(test3).toEqual([0.7, 0.7, 0.7]);
+      expect(test4).toEqual([0.3, 0.7, 0.9]);
     });
   });
 });

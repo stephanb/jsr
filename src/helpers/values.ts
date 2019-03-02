@@ -34,3 +34,13 @@ export function findClosestValueIndex<T extends number> (valueSet: T[], value: T
     0,
   );
 }
+
+/**
+ * Overwrites each not numeric value in target with value from source,
+ * and performs fixing values, so they don't overlap each other or exceed 0-1
+ * @param source complete (filled) array of values
+ * @param target array of values to be filled
+ */
+export function rewriteRatioValues (source: TValueRatio[], target: TValueRatio[]): TValueRatio[] {
+
+}
