@@ -1,5 +1,5 @@
 import { TValueRatio, TValueReal } from '~/types';
-import { ratioToReal, realToRatio, findClosestValueIndex } from '~/helpers/values';
+import { ratioToReal, realToRatio, findClosestValueIndex, rewriteRatioValues } from '~/helpers/values';
 import { SystemEvent } from '~/EventHandler/SystemEvent';
 
 /**
@@ -37,7 +37,7 @@ export class EValueChange extends SystemEvent {
    * If value is not true number, original is taken and no change is performed.
    */
   public set ratioValues (values: TValueRatio[]) {
-    this.fRatioValues = values.map((value, index) => (Number.isFinite(value)) ? value : this.fRatioValues[index]);
+    this.fRatioValues = rewriteRatioValues(this.fRatioValues, values);
     this.fRealValues = values.map((value) => ratioToReal(this.fConfig.min, this.fConfig.max, value));
   }
 

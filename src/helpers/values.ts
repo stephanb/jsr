@@ -38,9 +38,24 @@ export function findClosestValueIndex<T extends number> (valueSet: T[], value: T
 /**
  * Overwrites each not numeric value in target with value from source,
  * and performs fixing values, so they don't overlap each other or exceed 0-1
+ *
  * @param source complete (filled) array of values
  * @param target array of values to be filled
  */
 export function rewriteRatioValues (source: TValueRatio[], target: TValueRatio[]): TValueRatio[] {
-  return [];
+  return target
+    .map(
+      (value, index) =>
+        (value === null)                  // for null target value...
+        ? source[index]                   // use source value.
+        : (value < source[index - 1])     // for target value smaller than previous source...
+          ? source[index - 1]             // use previous source.
+          : (value > source[index + 1])   // for target value larger than following source...
+            ? source[index + 1]           // use following source.
+            : value < 0                   // for value smaller than 0...
+              ? 0 as TValueRatio          // use 0.
+              : value > 1                 // for value larget than 1...
+                ? 1 as TValueRatio        // use 1.
+                : value,                  // in other cases use the value
+    );
 }

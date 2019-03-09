@@ -37,7 +37,7 @@ describe('helpers/values', () => {
   describe('rewriteRatioValues', () => {
     it('should rewrite values to non numeric fields', () => {
       const test1 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, 0.7, null] as TValueRatio[]);
-      const test2 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, null, null] as any as TValueRatio[]);
+      const test2 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, null, null] as any);
       const test3 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [0.1, 0.7, null] as TValueRatio[]);
       const test4 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
 
@@ -55,7 +55,7 @@ describe('helpers/values', () => {
 
       expect(test1).toEqual([0.3, 0.3, 0.7]);
       expect(test2).toEqual([0.3, 0.7, 0.7]);
-      expect(test3).toEqual([0.7, 0.7, 0.7]);
+      expect(test3).toEqual([0.5, 0.6, 0.7]);
       expect(test4).toEqual([0.3, 0.7, 0.9]);
     });
   });
