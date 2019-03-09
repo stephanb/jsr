@@ -103,7 +103,6 @@ export class Slider implements Module {
 
     // Handle mouse move (count value and trigger update)
     const handleMouseMove = throttle(10, (moveEvent: MouseEvent) => {
-      console.log(performance.now());
       const moveX: number = moveEvent.clientX;
       const moveRelative: number = moveX - rect.left;
       const ratio: TValueRatio = moveRelative / rect.width as TValueRatio;
