@@ -21,10 +21,9 @@ export class Slider implements Module {
     this.fRenderer = renderer;
     this.fEvents = events;
 
-    const sliders: RendererElement[] = config.values.map(() => this.createSlider());
-    this.fSliders = sliders;
+    this.fSliders = config.values.map(() => this.createSlider());
 
-    sliders.forEach((s) => renderer.root.addChild(s));
+    this.fSliders.forEach((s) => renderer.root.addChild(s));
     this.initEvents();
   }
 
