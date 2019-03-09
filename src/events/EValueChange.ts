@@ -6,8 +6,8 @@ import { SystemEvent } from '~/EventHandler/SystemEvent';
  * Emits complete set of values if any of them changes.
  */
 export class EValueChange extends SystemEvent {
-  private fRatioValues: TValueRatio[];
-  private fRealValues: TValueReal[];
+  private fRatioValues: TValueRatio[] = [];
+  private fRealValues: TValueReal[] = [];
 
   /**
    * Returns changed values as real.
