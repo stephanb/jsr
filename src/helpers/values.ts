@@ -41,8 +41,16 @@ export function findClosestValueIndex<T extends number> (valueSet: T[], value: T
  *
  * @param source complete (filled) array of values
  * @param target array of values to be filled
+ * @param min minimum value that can be set
+ * @param max maximum value that can be set
  */
-export function rewriteRatioValues (source: TValueRatio[], target: TValueRatio[]): TValueRatio[] {
+export function rewriteValues (
+  source: TValueReal[], target: TValueReal[], min: TValueReal, max: TValueReal,
+): TValueReal[];
+export function rewriteValues (source: TValueRatio[], target: TValueRatio[]): TValueRatio[];
+export function rewriteValues<T extends number> (
+  source: T[], target: T[], min: T = 0 as T, max: T = 1 as T,
+): T[] {
   return target
     .map(
       (value, index) =>
@@ -52,10 +60,10 @@ export function rewriteRatioValues (source: TValueRatio[], target: TValueRatio[]
           ? source[index - 1]             // use previous source.
           : (value > source[index + 1])   // for target value larger than following source...
             ? source[index + 1]           // use following source.
-            : value < 0                   // for value smaller than 0...
-              ? 0 as TValueRatio          // use 0.
-              : value > 1                 // for value larget than 1...
-                ? 1 as TValueRatio        // use 1.
+            : value < min                 // for value smaller than min...
+              ? min                       // use min.
+              : value > max               // for value larget than max...
+                ? max                     // use max.
                 : value,                  // in other cases use the value
     );
 }

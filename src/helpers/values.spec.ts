@@ -1,4 +1,4 @@
-import { findClosestValueIndex, realToRatio, ratioToReal, rewriteRatioValues } from '~/helpers/values';
+import { findClosestValueIndex, realToRatio, ratioToReal, rewriteValues } from '~/helpers/values';
 import { TValueReal, TValueRatio } from '~/types';
 
 describe('helpers/values', () => {
@@ -34,12 +34,12 @@ describe('helpers/values', () => {
     });
   });
 
-  describe('rewriteRatioValues', () => {
+  describe('rewriteValues', () => {
     it('should rewrite values to non numeric fields', () => {
-      const test1 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, 0.7, null] as TValueRatio[]);
-      const test2 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [null, null, null] as any);
-      const test3 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [0.1, 0.7, null] as TValueRatio[]);
-      const test4 = rewriteRatioValues([0, 0.5, 1] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
+      const test1 = rewriteValues([0, 0.5, 1] as TValueRatio[], [null, 0.7, null] as TValueRatio[]);
+      const test2 = rewriteValues([0, 0.5, 1] as TValueRatio[], [null, null, null] as any);
+      const test3 = rewriteValues([0, 0.5, 1] as TValueRatio[], [0.1, 0.7, null] as TValueRatio[]);
+      const test4 = rewriteValues([0, 0.5, 1] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
 
       expect(test1).toEqual([0, 0.7, 1]);
       expect(test2).toEqual([0, 0.5, 1]);
@@ -48,10 +48,10 @@ describe('helpers/values', () => {
     });
 
     it('should rewrite values and correct invalid neighbour values relations', () => {
-      const test1 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [null, 0.2, null] as TValueRatio[]);
-      const test2 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [null, 0.8, null] as TValueRatio[]);
-      const test3 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [0.8, 0.6, null] as TValueRatio[]);
-      const test4 = rewriteRatioValues([0.3, 0.5, 0.7] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
+      const test1 = rewriteValues([0.3, 0.5, 0.7] as TValueRatio[], [null, 0.2, null] as TValueRatio[]);
+      const test2 = rewriteValues([0.3, 0.5, 0.7] as TValueRatio[], [null, 0.8, null] as TValueRatio[]);
+      const test3 = rewriteValues([0.3, 0.5, 0.7] as TValueRatio[], [0.8, 0.6, null] as TValueRatio[]);
+      const test4 = rewriteValues([0.3, 0.5, 0.7] as TValueRatio[], [0.3, 0.7, 0.9] as TValueRatio[]);
 
       expect(test1).toEqual([0.3, 0.3, 0.7]);
       expect(test2).toEqual([0.3, 0.7, 0.7]);

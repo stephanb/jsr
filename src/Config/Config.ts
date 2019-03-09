@@ -43,15 +43,15 @@ export class Config {
   /**
    * Returns minimal value from scale
    */
-  public get min (): number {
-    return this.fConfig.min;
+  public get min (): TValueReal {
+    return this.fConfig.min as TValueReal;
   }
 
   /**
    * Returns maximum value from scale
    */
-  public get max (): number {
-    return this.fConfig.max;
+  public get max (): TValueReal {
+    return this.fConfig.max as TValueReal;
   }
 
   /**
