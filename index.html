@@ -18,10 +18,11 @@
     import { Greeter } from './tmp/Greeter.mjs';
     import { Rail } from './tmp/Rail.mjs';
     import { Slider } from './tmp/Slider.mjs';
+    import { Label } from './tmp/Label.mjs';
 
     new JSR({
       root: document.querySelector('#jsr'),
-      modules: [Rail, Slider],
+      modules: [Rail, Slider, Label],
       values: [10, 50],
       min: 0,
       max: 100,

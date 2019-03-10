@@ -9,7 +9,8 @@ const jsrModules = [
   'JSR',
   'Greeter',
   'Rail',
-  'Slider'
+  'Slider',
+  'Label'
 ];
 
 export default (options) => {
