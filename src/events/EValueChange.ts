@@ -38,7 +38,7 @@ export class EValueChange extends SystemEvent {
    */
   public set ratioValues (values: TValueRatio[]) {
     this.fRatioValues = rewriteValues(this.fRatioValues, values);
-    this.fRealValues = values.map((value) => ratioToReal(this.fConfig.min, this.fConfig.max, value));
+    this.fRealValues = this.fRatioValues.map((value) => ratioToReal(this.fConfig.min, this.fConfig.max, value));
   }
 
   /**
