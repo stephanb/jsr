@@ -18,3 +18,9 @@ lint:
   image: $IMAGE
   script:
     - npm run test:lint
+
+ts:
+  stage: test
+  image: $IMAGE
+  script:
+    - npm run test:ts
