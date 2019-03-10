@@ -3,6 +3,7 @@ import { Config } from '~/Config/Config';
 import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import './Label.css';
+import { TValueReal } from '~/types';
 
 export class Label implements Module {
 
@@ -20,14 +21,32 @@ export class Label implements Module {
 
     this.fLabels = this.fConfig.values.map(() => this.createLabel());
     this.fLabels.forEach((label) => this.fRenderer.root.addChild(label));
+    this.initEvents();
   }
 
   /**
-   * Creates single label element
+   * Creates single label element.
    */
   private createLabel (): RendererElement {
     return this.fRenderer.createElement('div', {
       class: 'jsr_label',
     });
+  }
+
+  /**
+   * Inits listening for certain events.
+   */
+  private initEvents (): void {
+    // On value change set values to sliders
+    this.fEvents.subscribe(this, this.fEvents.event.EValueChange, (e) => this.setLabelValues(e.realValues));
+  }
+
+  /**
+   * Sets label texts.
+   *
+   * @param values set of real values to display
+   */
+  private setLabelValues (values: TValueReal[]): void {
+    values.forEach((value, index) => this.fLabels[index].html = String(value));
   }
 }

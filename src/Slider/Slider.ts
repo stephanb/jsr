@@ -59,8 +59,6 @@ export class Slider implements Module {
 
   /**
    * Inits listening for certain events
-   *
-   * @param events events handler
    */
   private initEvents (): void {
     // On value change set values to sliders
