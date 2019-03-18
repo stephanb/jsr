@@ -41,8 +41,8 @@ export function findClosestValueIndex<T extends number> (valueSet: T[], value: T
  *
  * @param source complete (filled) array of values
  * @param target array of values to be filled
- * @param min minimum value that can be set
- * @param max maximum value that can be set
+ * @param min minimum value that can be set (only for real values)
+ * @param max maximum value that can be set (only for real values)
  */
 export function rewriteValues (
   source: TValueReal[], target: TValueReal[], min: TValueReal, max: TValueReal,
