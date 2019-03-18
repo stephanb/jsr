@@ -1,1 +1,4 @@
-.jsr_label {}
+.jsr_label {
+  position: absolute;
+  top: 10px;
+}
