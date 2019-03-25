@@ -13,6 +13,7 @@ describe('EventHandler', () => {
     values: [0],
     min: 0,
     max: 100,
+    step: 1,
   }, []);
 
   beforeEach(() => {

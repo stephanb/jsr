@@ -45,6 +45,7 @@ describe('JSR', () => {
         values: [0, 100],
         min: 0,
         max: 100,
+        step: 1,
       });
 
       expect(mockInit).toBeCalledTimes(1);
