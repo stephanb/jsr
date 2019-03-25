@@ -1,5 +1,6 @@
 import { ModuleConstructor } from '~/Module';
-import { TValueReal } from '~/types';
+import { TValueReal, TValueRatio } from '~/types';
+import { realToRatio } from '~/helpers/values';
 
 export interface IConfig {
   root: HTMLElement;
@@ -11,7 +12,8 @@ export interface IConfig {
 }
 
 interface ICache {
-  stepPrecision: number;
+  stepRatioPrecision: number;
+  stepRatio: TValueRatio;
 }
 
 /**
@@ -20,7 +22,6 @@ interface ICache {
 export class Config {
   private static fDefaults: Partial<IConfig> = {
     modules: [], // will be overwritten by given registeredModules
-    step: 1,
   };
 
   private fCache: Partial<ICache> = {};
@@ -91,22 +92,35 @@ export class Config {
   }
 
   /**
+   * Returns step as ratio value.
+   * @cache
+   */
+  public get stepRatio (): TValueRatio {
+    if (this.fCache.stepRatio) {
+      return this.fCache.stepRatio;
+    }
+
+    const stepRatio: TValueRatio = realToRatio(this.fConfig.min, this.fConfig.max, this.step);
+
+    this.fCache.stepRatio = stepRatio;
+    return stepRatio;
+  }
+
+  /**
    * Returns number of decimals places step has.
    * @cache
    */
-  public get stepPrecision (): number {
-    if (this.fCache.stepPrecision) {
-      return this.fCache.stepPrecision;
+  public get stepRatioPrecision (): number {
+    if (this.fCache.stepRatioPrecision) {
+      return this.fCache.stepRatioPrecision;
     }
 
-    const stringifiedStep: string[] = this.step.toString().split('.');
+    const stringifiedStep: string[] = this.stepRatio.toString().split('.');
 
     // If any value is found after '.' then return number of it, 0 otherwise
     const stepPrecision: number = stringifiedStep[1] ? stringifiedStep[1].length : 0;
 
-    // Save value to cache
-    this.fCache.stepPrecision = stepPrecision;
-
+    this.fCache.stepRatioPrecision = stepPrecision;
     return stepPrecision;
   }
 
