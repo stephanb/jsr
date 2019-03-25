@@ -1,4 +1,4 @@
-import { findClosestValueIndex, realToRatio, ratioToReal, rewriteValues } from '~/helpers/values';
+import { findClosestValueIndex, realToRatio, ratioToReal, rewriteValues, roundToStep } from '~/helpers/values';
 import { TValueReal, TValueRatio } from '~/types';
 
 describe('helpers/values', () => {
@@ -57,6 +57,30 @@ describe('helpers/values', () => {
       expect(test2).toEqual([0.3, 0.7, 0.7]);
       expect(test3).toEqual([0.5, 0.6, 0.7]);
       expect(test4).toEqual([0.3, 0.7, 0.9]);
+    });
+  });
+
+  describe('roundToStep', () => {
+    it('should round positive numbers to given step', () => {
+      expect(roundToStep(0, 5, 0)).toBe(0);
+      expect(roundToStep(7, 1, 0)).toBe(7);
+      expect(roundToStep(7, 2, 0)).toBe(8);
+      expect(roundToStep(6.3, 1, 0)).toBe(6);
+      expect(roundToStep(6.7, 1, 0)).toBe(7);
+      expect(roundToStep(7.3, 2, 0)).toBe(8);
+    });
+
+    it('should round negative numbers to given step', () => {
+      expect(roundToStep(-23, 1, 0)).toBe(-23);
+      expect(roundToStep(-23, 2, 0)).toBe(-24);
+      expect(roundToStep(-23.4, 1, 0)).toBe(-23);
+    });
+
+    it('should round numbers to given floating step', () => {
+      expect(roundToStep(7.5, 0.7, 1)).toBeCloseTo(7.7);
+      expect(roundToStep(16.5, 0.3, 1)).toBeCloseTo(16.5);
+      expect(roundToStep(16.5, 0.5, 1)).toBeCloseTo(16.5);
+      expect(roundToStep(16.5, 0.4, 1)).toBeCloseTo(16.4);
     });
   });
 });

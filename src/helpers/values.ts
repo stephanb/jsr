@@ -23,20 +23,34 @@ export function ratioToReal (min: number, max: number, value: TValueRatio): TVal
 
 /**
  * Rounds given value to step.
+ * It rounds to closer bigger value (step of 2, 23 will be rounded to 24 and -23 to -24).
+ * Although stepPrecision could be calculated, for performance reasons it's not.
  *
  * @param value value to round
  * @param step step to round to
  */
 export function roundToStep<T extends number> (value: T, step: T, stepPrecision: number): T {
+  // Shortcut for rounding zero, because it always matches
+  if (value === 0) {
+    return 0 as T;
+  }
+
+  // Use abs and calculate sign to make proper rounding no matter of sign
+  const abs: number = Math.abs(value);
+  const sign: number = abs / value;
+
   const stepDecimalsMultiplier = Math.pow(10, stepPrecision);
 
   // Round value to step
-  const rounded: T = Math.round(value / step) * step as T;
+  const rounded: number = Math.round(abs / step) * step;
 
   // Fix value to match step precision
-  const roundedWithDecimals: T = Math.round(rounded * stepDecimalsMultiplier) / stepDecimalsMultiplier as T;
+  const roundedWithDecimals: number = Math.round(rounded * stepDecimalsMultiplier) / stepDecimalsMultiplier;
 
-  return roundedWithDecimals;
+  // Brind back sign
+  const signedRoundedWithDecimals: number = sign * roundedWithDecimals;
+
+  return signedRoundedWithDecimals as T;
 }
 
 /**
