@@ -61,8 +61,8 @@ export class JSR {
   constructor (config: IConfig) {
     this.fConfig = new Config(config, JSR.fAvailableModules);
     this.fRenderer = new Renderer(this.fConfig.rootEl);
-    this.fModules = this.buildModules(this.fConfig.modules);
     this.fEventHandler = new EventHandler(this.fConfig);
+    this.fModules = this.buildModules(this.fConfig.modules);
     this.initModules(this.fModules, this.fConfig, this.fRenderer, this.fEventHandler);
     this.initApplication(this.fConfig, this.fEventHandler);
   }

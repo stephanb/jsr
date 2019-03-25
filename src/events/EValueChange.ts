@@ -22,7 +22,9 @@ export class EValueChange extends SystemEvent {
    */
   public set realValues (values: TValueReal[]) {
     this.fRealValues = rewriteValues(this.fRealValues, values, this.fConfig.min, this.fConfig.max);
-    this.fRatioValues = this.fRealValues.map((value) => realToRatio(this.fConfig.min, this.fConfig.max, value));
+    this.fRatioValues = this.fRealValues.map(
+      (value) => realToRatio(this.fConfig.min, this.fConfig.max, value),
+    );
   }
 
   /**
@@ -38,12 +40,14 @@ export class EValueChange extends SystemEvent {
    */
   public set ratioValues (values: TValueRatio[]) {
     this.fRatioValues = rewriteValues(this.fRatioValues, values);
-    this.fRealValues = this.fRatioValues.map((value) => ratioToReal(this.fConfig.min, this.fConfig.max, value));
+    this.fRealValues = this.fRatioValues.map(
+      (value) => ratioToReal(this.fConfig.min, this.fConfig.max, value),
+    );
   }
 
   /**
    * Allows to set single ratio value.
-   * It automagically find closest value to given value, and sets it.
+   * It automagically finds closest value to given value, and sets it.
    */
   public set singleRatioValue (value: TValueRatio) {
     const closestValueIndex: number = findClosestValueIndex(this.fRatioValues, value);
