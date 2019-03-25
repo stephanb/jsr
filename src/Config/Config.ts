@@ -107,24 +107,6 @@ export class Config {
   }
 
   /**
-   * Returns number of decimals places step has.
-   * @cache
-   */
-  public get stepRatioPrecision (): number {
-    if (this.fCache.stepRatioPrecision) {
-      return this.fCache.stepRatioPrecision;
-    }
-
-    const stringifiedStep: string[] = this.stepRatio.toString().split('.');
-
-    // If any value is found after '.' then return number of it, 0 otherwise
-    const stepPrecision: number = stringifiedStep[1] ? stringifiedStep[1].length : 0;
-
-    this.fCache.stepRatioPrecision = stepPrecision;
-    return stepPrecision;
-  }
-
-  /**
    * Validates config and throws in case of error.
    */
   public validateConfig (config: IConfig): boolean {

@@ -39,13 +39,23 @@ export class EValueChange extends SystemEvent {
    * If value is not true number, original is taken and no change is performed.
    */
   public set ratioValues (values: TValueRatio[]) {
-    this.fRatioValues = rewriteValues(this.fRatioValues, values);
-    this.fRatioValues = this.fRatioValues.map(
-      (value) => roundToStep(value, this.fConfig.stepRatio, this.fConfig.stepRatioPrecision),
+    const stepPrecision: number = this.getStepPrecision(this.fConfig.step);
+    const stepRatioPrecision: number = this.getStepPrecision(this.fConfig.stepRatio);
+
+    this.fRatioValues = rewriteValues(this.fRatioValues, values).map(
+      (value) => roundToStep(
+        value,
+        this.fConfig.stepRatio,
+        stepRatioPrecision,
+      ),
     );
 
     this.fRealValues = this.fRatioValues.map(
-      (value) => ratioToReal(this.fConfig.min, this.fConfig.max, value),
+      (value) => roundToStep(
+        ratioToReal(this.fConfig.min, this.fConfig.max, value),
+        this.fConfig.step,
+        stepPrecision,
+      ),
     );
   }
 
@@ -59,5 +69,17 @@ export class EValueChange extends SystemEvent {
     newValues[closestValueIndex] = value;
 
     this.ratioValues = newValues;
+  }
+
+  /**
+   * Returns number of decimals places step has.
+   */
+  private getStepPrecision (step: TValueRatio | TValueReal): number {
+    const stringifiedStep: string[] = step.toString().split('.');
+
+    // If any value is found after '.' then return number of it, 0 otherwise
+    const stepPrecision: number = stringifiedStep[1] ? stringifiedStep[1].length : 0;
+
+    return stepPrecision;
   }
 }
