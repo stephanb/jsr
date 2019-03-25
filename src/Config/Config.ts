@@ -100,12 +100,11 @@ export class Config {
       throw new Error('JSR: config.root is not HTMLElement');
     }
 
-    if (isNaN(config.min) || isNaN(config.max)) {
-      throw new Error('JSR: config.min or config.max is not a valid number');
+    if (!Number.isFinite(config.min) || !Number.isFinite(config.max) || !Number.isFinite(config.step)) {
+      throw new Error('JSR: config.min, config.max or config.step is not a valid number');
     }
 
-    /** @NOTE .isNaN treats stringified number ('1') as valid number */
-    if (!Array.isArray(config.values) || config.values.length === 0 || config.values.some((v) => isNaN(v))) {
+    if (!Array.isArray(config.values) || config.values.length === 0 || config.values.some((v) => !Number.isFinite(v))) {
       throw new Error(`JSR: config.values is not array, is empty, or some of the values is not a number`);
     }
 
