@@ -22,6 +22,24 @@ export function ratioToReal (min: number, max: number, value: TValueRatio): TVal
 }
 
 /**
+ * Rounds given value to step.
+ *
+ * @param value value to round
+ * @param step step to round to
+ */
+export function roundToStep<T extends number> (value: T, step: T, stepPrecision: number): T {
+  const stepDecimalsMultiplier = Math.pow(10, stepPrecision);
+
+  // Round value to step
+  const rounded: T = Math.round(value / step) * step as T;
+
+  // Fix value to match step precision
+  const roundedWithDecimals: T = Math.round(rounded * stepDecimalsMultiplier) / stepDecimalsMultiplier as T;
+
+  return roundedWithDecimals;
+}
+
+/**
  * Returns index of value from set, that is closest to given value
  *
  * @param valueSet set of values to look for

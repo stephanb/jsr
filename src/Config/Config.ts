@@ -10,6 +10,10 @@ export interface IConfig {
   step: number;
 }
 
+interface ICache {
+  stepPrecision: number;
+}
+
 /**
  * Serves as DTO for system config.
  */
@@ -18,6 +22,8 @@ export class Config {
     modules: [], // will be overwritten by given registeredModules
     step: 1,
   };
+
+  private fCache: Partial<ICache> = {};
 
   /** Stores merged version of config */
   private fConfig: IConfig;
@@ -80,8 +86,28 @@ export class Config {
   /**
    * Returns step.
    */
-  public get step (): number {
-    return this.fConfig.step;
+  public get step (): TValueReal {
+    return this.fConfig.step as TValueReal;
+  }
+
+  /**
+   * Returns number of decimals places step has.
+   * @cache
+   */
+  public get stepPrecision (): number {
+    if (this.fCache.stepPrecision) {
+      return this.fCache.stepPrecision;
+    }
+
+    const stringifiedStep: string[] = this.step.toString().split('.');
+
+    // If any value is found after '.' then return number of it, 0 otherwise
+    const stepPrecision: number = stringifiedStep[1] ? stringifiedStep[1].length : 0;
+
+    // Save value to cache
+    this.fCache.stepPrecision = stepPrecision;
+
+    return stepPrecision;
   }
 
   /**
