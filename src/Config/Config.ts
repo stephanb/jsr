@@ -7,6 +7,7 @@ export interface IConfig {
   values: number[];
   min: number;
   max: number;
+  step: number;
 }
 
 /**
@@ -15,6 +16,7 @@ export interface IConfig {
 export class Config {
   private static fDefaults: Partial<IConfig> = {
     modules: [], // will be overwritten by given registeredModules
+    step: 1,
   };
 
   /** Stores merged version of config */
@@ -73,6 +75,13 @@ export class Config {
    */
   public get values (): TValueReal[] {
     return this.fConfig.values.slice() as TValueReal[];
+  }
+
+  /**
+   * Returns step.
+   */
+  public get step (): number {
+    return this.fConfig.step;
   }
 
   /**
