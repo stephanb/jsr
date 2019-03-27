@@ -1,5 +1,6 @@
 import { Module } from '~/Module';
 import { JSR } from '~/JSR/JSR';
+import { TValueReal } from '~/types';
 
 describe('JSR static', () => {
   class FooModule implements Module { init () {/** */} }
@@ -49,6 +50,27 @@ describe('JSR', () => {
       });
 
       expect(mockInit).toBeCalledTimes(1);
+    });
+  });
+
+  describe('values set/get', () => {
+    it('should properly set and get values on JSR', () => {
+      const jsr = new JSR({
+        root: document.body,
+        modules: [],
+        values: [0, 100],
+        min: 0,
+        max: 100,
+        step: 1,
+      });
+
+      expect(jsr.values).toEqual(expect.arrayContaining([0, 100]));
+      jsr.setValues([35, 100]);
+      expect(jsr.values).toEqual(expect.arrayContaining([35, 100]));
+      jsr.setValues([50, null]);
+      expect(jsr.values).toEqual(expect.arrayContaining([50, 100]));
+      jsr.setValues([null, 75]);
+      expect(jsr.values).toEqual(expect.arrayContaining([50, 75]));
     });
   });
 });

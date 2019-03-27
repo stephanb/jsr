@@ -72,18 +72,18 @@ export class JSR {
    * Sets given set of values.
    * It can utilise power of EValueChange mechanics.
    *
-   * @async
+   * Setting the value may be asynchronuous!
    */
-  public set values (realValues: TValueReal[]) {
+  public setValues (realValues: (number | null)[]): void {
     this.fEventHandler.trigger(null, this.fEventHandler.event.EValueChange, {
-      realValues,
+      realValues: realValues as TValueReal[],
     });
   }
 
   /**
    * Returns JSR current values set
    */
-  public get values (): TValueReal[] {
+  public get values (): number[] {
     return this.fEventHandler.event.EValueChange.realValues;
   }
 
