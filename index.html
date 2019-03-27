@@ -21,7 +21,7 @@
     import { Slider } from './tmp/Slider.mjs';
     import { Label } from './tmp/Label.mjs';
 
-    new JSR({
+    const jsr = new JSR({
       root: document.querySelector('#jsr'),
       modules: [Rail, Slider, Label],
       values: [27, 50],
@@ -29,6 +29,8 @@
       max: 100,
       step: 1,
     });
+
+    jsr.values = [20, null];
   </script>
 </body>
 </html>

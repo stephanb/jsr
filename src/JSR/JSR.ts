@@ -3,6 +3,7 @@ import { IConfig, Config } from '~/Config/Config';
 import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import './JSR.css';
+import { TValueReal } from '~/types';
 
 export class JSR {
   /** Holds collection of available modules to use */
@@ -65,6 +66,25 @@ export class JSR {
     this.fModules = this.buildModules(this.fConfig.modules);
     this.initModules(this.fModules, this.fConfig, this.fRenderer, this.fEventHandler);
     this.initApplication(this.fConfig, this.fEventHandler);
+  }
+
+  /**
+   * Sets given set of values.
+   * It can utilise power of EValueChange mechanics.
+   *
+   * @async
+   */
+  public set values (realValues: TValueReal[]) {
+    this.fEventHandler.trigger(null, this.fEventHandler.event.EValueChange, {
+      realValues,
+    });
+  }
+
+  /**
+   * Returns JSR current values set
+   */
+  public get values (): TValueReal[] {
+    return this.fEventHandler.event.EValueChange.realValues;
   }
 
   /**
