@@ -9,6 +9,7 @@ export interface IConfig {
   min: number;
   max: number;
   step: number;
+  inputs?: HTMLInputElement[];
 }
 
 interface ICache {
@@ -82,6 +83,13 @@ export class Config {
    */
   public get values (): TValueReal[] {
     return this.fConfig.values.slice() as TValueReal[];
+  }
+
+  /**
+   * Returns copy of inputs
+   */
+  public get inputs (): HTMLInputElement[] {
+    return (this.fConfig.inputs || []).slice();
   }
 
   /**
