@@ -2,8 +2,8 @@ import { Module, ModuleConstructor } from '~/Module';
 import { IConfig, Config } from '~/Config/Config';
 import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
-import './JSR.css';
 import { TValueReal } from '~/types';
+import './JSR.css';
 
 export class JSR {
   /** Holds collection of available modules to use */
