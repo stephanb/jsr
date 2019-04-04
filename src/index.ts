@@ -1,11 +1,13 @@
-import { JSR } from '~/JSR/JSR';
-import { Greeter } from '~/Greeter/Greeter';
-import { Rail } from '~/Rail/Rail';
-import { Slider } from '~/Slider/Slider';
+import { JSR } from '~/modules/JSR/JSR';
+import { Greeter } from '~/modules/Greeter/Greeter';
+import { Rail } from '~/modules/Rail/Rail';
+import { Slider } from '~/modules/Slider/Slider';
+import { Input } from '~/modules/Input/Input';
 
 JSR.use(Greeter);
 JSR.use(Rail);
 JSR.use(Slider);
+JSR.use(Input);
 
 export default JSR;
-export { Greeter, Rail, Slider };
+export { JSR, Greeter, Rail, Slider, Input };

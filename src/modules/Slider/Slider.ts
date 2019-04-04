@@ -4,8 +4,8 @@ import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import { ratioToPercent } from '~/helpers/styles';
 import { TValueRatio } from '~/types';
-import './Slider.css';
 import { throttle } from '~/helpers/timing';
+import './Slider.css';
 
 export class Slider implements Module {
 

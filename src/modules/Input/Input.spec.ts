@@ -1,5 +1,5 @@
-import { JSR } from '~/JSR/JSR';
-import { Input } from '~/Input/Input';
+import { JSR } from '~/modules/JSR/JSR';
+import { Input } from '~/modules/Input/Input';
 
 describe('Input', () => {
   /** rAF Promise wrapper */

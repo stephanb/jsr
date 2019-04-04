@@ -1,5 +1,5 @@
 import { Module } from '~/Module';
-import { JSR } from '~/JSR/JSR';
+import { JSR } from '~/modules/JSR/JSR';
 
 describe('JSR static', () => {
   class FooModule implements Module { init () {/** */} }

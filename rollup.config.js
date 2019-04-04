@@ -10,7 +10,8 @@ const jsrModules = [
   'Greeter',
   'Rail',
   'Slider',
-  'Label'
+  'Label',
+  'Input'
 ];
 
 export default (options) => {
@@ -54,7 +55,7 @@ export default (options) => {
   // Modular
   if (options.configModular) {
     const inputs = jsrModules.map(filename => ({
-      input: `src/${filename}/${filename}.ts`,
+      input: `src/modules/${filename}/${filename}.ts`,
       output: {
         file: `${outputDir}/${filename}.mjs`,
         format: 'esm',
