@@ -4,7 +4,7 @@ import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import { ratioToPercent } from '~/helpers/styles';
 import { TValueRatio } from '~/types';
-import { throttle } from '~/helpers/timing';
+import { handleMove } from '~/helpers/draggable';
 import './Slider.css';
 
 export class Slider implements Module {
@@ -87,37 +87,6 @@ export class Slider implements Module {
     }
 
     mouseDownEvent.stopPropagation();
-    this.handleSliderMove(index);
-  }
-
-  /**
-   * Handles slider move event.
-   */
-  private handleSliderMove (index: number): void {
-    // Get root rect
-    const rect: ClientRect = this.fRenderer.root.element.getBoundingClientRect();
-    const values: TValueRatio[] = (new Array(this.fSliders.length)).fill(null);
-
-    // Handle mouse move (count value and trigger update)
-    const handleMouseMove = throttle(10, (moveEvent: MouseEvent) => {
-      const moveX: number = moveEvent.clientX;
-      const moveRelative: number = moveX - rect.left;
-      const ratio: TValueRatio = moveRelative / rect.width as TValueRatio;
-      values[index] = ratio;
-
-      this.fEvents.trigger(null, this.fEvents.event.EValueChange, {
-        ratioValues: values,
-      });
-    });
-
-    // Handle mouse up (unbind any events)
-    const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-
-    // Add events
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    handleMove(index, this.fConfig.values.length, this.fEvents, this.fRenderer);
   }
 }

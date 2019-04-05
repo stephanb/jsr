@@ -4,6 +4,7 @@ import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import { TValueReal, TValueRatio } from '~/types';
 import './Label.css';
+import { handleMove } from '~/helpers/draggable';
 
 export class Label implements Module {
 
@@ -42,6 +43,13 @@ export class Label implements Module {
       this.setLabelPositions(e.ratioValues);
       this.setLabelValues(e.realValues);
     });
+
+    // For each label add support for mousedown event
+    this.fLabels.forEach((label, index) => {
+      label.element.addEventListener('mousedown', (mouseDownEvent) => {
+        this.handleLabelDown(mouseDownEvent, index);
+      });
+    });
   }
 
   /**
@@ -62,5 +70,23 @@ export class Label implements Module {
     values.forEach((value, index) => this.fLabels[index].patchStyles({
       left: `${value * 100}%`,
     }));
+  }
+
+  /**
+   * Handles mousedown on label.
+   */
+  private handleLabelDown (mouseDownEvent: MouseEvent, index: number): void {
+    const eventTarget = mouseDownEvent.target;
+
+    if (
+      !eventTarget ||
+      !(eventTarget instanceof Element) ||
+      !eventTarget.classList.contains('jsr_label')
+    ) {
+      return;
+    }
+
+    mouseDownEvent.stopPropagation();
+    handleMove(index, this.fConfig.values.length, this.fEvents, this.fRenderer);
   }
 }
