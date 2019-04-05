@@ -3,7 +3,7 @@ import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 
 export type ModuleConstructor = {
-  new (): Module;
+  new (...args: any[]): Module;
 };
 
 export abstract class Module {
