@@ -1,4 +1,15 @@
 .jsr_rail {
+  height: 15px;
+  cursor: pointer;
+  position: relative;
+}
+
+.jsr_rail::before {
+  content: '';
   height: 5px;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
   background: #444;
 }
