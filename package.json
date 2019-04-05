@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "author": "Mateusz 'Soanvig' Koteja",
   "description": "Pure JS range input solution",
-  "license": "MIT",
+  "license": "GNU LGPLv3",
   "scripts": {
     "build:es5": "rollup -c --configProduction --configTarget es5",
     "build:es6": "rollup -c --configProduction --configTarget es6",
