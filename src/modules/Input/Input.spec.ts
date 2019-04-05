@@ -17,7 +17,7 @@ describe('Input', () => {
 
     jsr = new JSR({
       root: document.body,
-      modules: [Input],
+      modules: [new Input()],
       values: [0, 100],
       min: 0,
       max: 100,

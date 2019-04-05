@@ -1,10 +1,10 @@
-import { ModuleConstructor } from '~/Module';
+import { ModuleConstructor, Module } from '~/Module';
 import { TValueReal, TValueRatio } from '~/types';
 import { realToRatio } from '~/helpers/values';
 
 export interface IConfig {
   root: HTMLElement;
-  modules: ModuleConstructor[];
+  modules: Module[];
   values: number[];
   min: number;
   max: number;
@@ -67,7 +67,7 @@ export class Config {
   /**
    * Returns copy of modules to use in app.
    */
-  public get modules (): ModuleConstructor[] {
+  public get modules (): Module[] {
     return this.fConfig.modules.slice();
   }
 

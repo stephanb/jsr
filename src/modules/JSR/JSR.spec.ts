@@ -41,7 +41,7 @@ describe('JSR', () => {
 
       const jsr = new JSR({
         root: document.body,
-        modules: [MockModule],
+        modules: [new MockModule()],
         values: [0, 100],
         min: 0,
         max: 100,
