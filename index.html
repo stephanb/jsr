@@ -23,14 +23,12 @@
 
     const jsr = new JSR({
       root: document.querySelector('#jsr'),
-      modules: [Rail, Slider, Label],
+      modules: [new Rail(), new Slider(), new Label()],
       values: [27, 50],
       min: 0,
       max: 100,
       step: 1,
     });
-
-    jsr.values = [20, null];
   </script>
 </body>
 </html>
