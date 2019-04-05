@@ -17,8 +17,48 @@ const jsrModules = [
 export default (options) => {
   validateOptions(options);
 
+  // Determine output dir
+  const outputDir = options.configProduction ? 'dist' : 'tmp';
+
+  // Not modular build
+  if (!options.configModular) {
+    return {
+      input: 'src/index.ts',
+      output: {
+        file: `${outputDir}/index.js`,
+        format: 'umd',
+        name: 'JSR',
+        exports: 'named'
+      },
+      plugins: getRollupPlugins(options)
+    }
+  }
+
+  // Modular
+  if (options.configModular) {
+    const inputs = jsrModules.map(filename => ({
+      input: `src/modules/${filename}/${filename}.ts`,
+      output: {
+        file: `${outputDir}/${filename}.mjs`,
+        format: 'esm',
+      },
+      plugins: getRollupPlugins(options)
+    }));
+
+    return inputs;
+  }
+
+  throw new Error(`Rollup build: don't know what to do with given options!`);
+}
+
+/**
+ * Builds rollup plugins
+ *
+ * @param {Object} options - object of CLI options (e.g. `--production` => `options.production = true`)
+ */
+const getRollupPlugins = (options) => {
   // Build list of rollup plugins, leave truthy values
-  const rollupPlugins = [
+  return [
     BundleSize(),
     PostCSS({
       extract: true
@@ -34,39 +74,6 @@ export default (options) => {
     }),
     options.configProduction ? Terser() : null
   ].filter(p => p);
-
-  // Determine output dir
-  const outputDir = options.configProduction ? 'dist' : 'tmp';
-
-  // Not modular build
-  if (!options.configModular) {
-    return {
-      input: 'src/index.ts',
-      output: {
-        file: `${outputDir}/index.js`,
-        format: 'umd',
-        name: 'JSR',
-        exports: 'named'
-      },
-      plugins: rollupPlugins
-    }
-  }
-
-  // Modular
-  if (options.configModular) {
-    const inputs = jsrModules.map(filename => ({
-      input: `src/modules/${filename}/${filename}.ts`,
-      output: {
-        file: `${outputDir}/${filename}.mjs`,
-        format: 'esm',
-      },
-      plugins: rollupPlugins
-    }));
-
-    return inputs;
-  }
-
-  throw new Error(`Rollup build: don't know what to do with given options!`);
 }
 
 /**
