@@ -4,6 +4,10 @@ import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import { TValueReal } from '~/types';
 
+interface IConfig {
+  inputs: HTMLInputElement[];
+}
+
 /**
  * Input module is responsible for updating given inputs values.
  */
@@ -16,11 +20,14 @@ export class Input implements Module {
   private fRenderer: Renderer;
   private fEvents: EventHandler;
 
+  constructor (config: IConfig) {
+    this.fInputs = config.inputs;
+  }
+
   public init (config: Config, renderer: Renderer, events: EventHandler): void {
     this.fConfig = config;
     this.fRenderer = renderer;
     this.fEvents = events;
-    this.fInputs = config.inputs;
 
     this.initEvents();
   }

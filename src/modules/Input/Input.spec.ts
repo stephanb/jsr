@@ -17,12 +17,11 @@ describe('Input', () => {
 
     jsr = new JSR({
       root: document.body,
-      modules: [new Input()],
+      modules: [new Input({ inputs: [input1, input2] })],
       values: [0, 100],
       min: 0,
       max: 100,
       step: 1,
-      inputs: [input1, input2],
     });
 
     await rAF();
