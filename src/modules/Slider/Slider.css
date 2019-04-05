@@ -7,6 +7,9 @@
   height: 25px;
   cursor: col-resize;
   transition: background 0.1s ease-in-out;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .jsr_slider::before {
