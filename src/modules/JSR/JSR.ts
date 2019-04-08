@@ -1,6 +1,6 @@
 import { Module, ModuleConstructor } from '~/Module';
 import { IConfig, Config } from '~/Config/Config';
-import { Renderer } from '~/Renderer/Renderer';
+import { Renderer, RendererElement } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import { TValueReal } from '~/types';
 import './JSR.css';

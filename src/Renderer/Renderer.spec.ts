@@ -71,22 +71,22 @@ describe('RendererElement', () => {
     });
 
     it('should properly add children', async () => {
-      const el = new RendererElement('div', null, ['foo']);
+      const el1 = new RendererElement('div', null, ['foo']);
       const el2 = new RendererElement('div', null, ['bar', 'bar']);
-      const el3 = new RendererElement('div', null, [el]);
-      const el4 = new RendererElement('div', null, [el, 'bar']);
+      const el3 = new RendererElement('div', null, [el1]);
+      const el4 = new RendererElement('div', null, [el2, 'bar']);
 
       await rAF();
 
-      expect(el.element.textContent).toBe('foo');
+      expect(el1.element.textContent).toBe('foo');
       expect(el2.element.textContent).toBe('barbar');
 
       // @TODO
       // Tests below cannot be handled properly by JSDom so are disabled
-      // expect(el3.element.children[0]).toBe(el.element);
-      // expect(el3.element.textContent).toBe('foo');
-      // expect(el4.element.children[0]).toBe(el.element);
-      // expect(el4.element.textContent).toBe('foobar');
+      expect(el3.element.querySelector('div')).toBe(el1.element);
+      expect(el3.element.textContent).toBe('foo');
+      expect(el4.element.querySelector('div')).toBe(el2.element);
+      expect(el4.element.textContent).toBe('barbarbar');
     });
   });
 

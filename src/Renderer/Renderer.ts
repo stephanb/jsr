@@ -97,13 +97,14 @@ export class RendererElement {
 
   /**
    * Allows to add child to DOM element.
-   * Actions is rAFed, because element is probably already in DOM.
+   * Action is rAFed, because element is probably already in DOM, so needs to be performant.
    *
    * @param child RendererElement to be added
    */
   public addChild (child: string | RendererElement): Promise<RendererElement> {
     return new Promise((resolve) => {
       window.requestAnimationFrame(() => {
+        // If element is child create text node out of it, otherwise get element
         const element = (typeof child === 'string') ? document.createTextNode(child) : child.element;
         this.fElement.appendChild(element);
 
