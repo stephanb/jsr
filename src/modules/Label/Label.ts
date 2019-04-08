@@ -6,14 +6,24 @@ import { TValueReal, TValueRatio } from '~/types';
 import './Label.css';
 import { handleMove } from '~/helpers/draggable';
 
+export type TLabelFormatter = (value: TValueReal) => string;
+export interface ILabelSettings {
+  formatter?: TLabelFormatter;
+}
+
 export class Label implements Module {
 
   /** Holds all defined labels (one per value) */
   private fLabels: RendererElement[] = [];
 
+  private fSettings: ILabelSettings;
   private fConfig: Config;
   private fRenderer: Renderer;
   private fEvents: EventHandler;
+
+  public constructor (settings: ILabelSettings) {
+    this.fSettings = settings;
+  }
 
   public init (config: Config, renderer: Renderer, events: EventHandler): void {
     this.fConfig = config;
@@ -58,7 +68,8 @@ export class Label implements Module {
    * @param values set of real values to display
    */
   private setLabelValues (values: TValueReal[]): void {
-    values.forEach((value, index) => this.fLabels[index].html = String(value));
+    const formatter: TLabelFormatter = this.fSettings.formatter || ((value) => String(value));
+    values.forEach((value, index) => this.fLabels[index].html = formatter(value));
   }
 
   /**

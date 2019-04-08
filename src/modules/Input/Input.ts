@@ -4,7 +4,7 @@ import { Renderer } from '~/Renderer/Renderer';
 import { EventHandler } from '~/EventHandler/EventHandler';
 import { TValueReal } from '~/types';
 
-interface IConfig {
+interface IInputConfig {
   inputs: HTMLInputElement[];
 }
 
@@ -20,7 +20,7 @@ export class Input implements Module {
   private fRenderer: Renderer;
   private fEvents: EventHandler;
 
-  constructor (config: IConfig) {
+  constructor (config: IInputConfig) {
     this.fInputs = config.inputs;
   }
 
