@@ -5,7 +5,7 @@ export class Renderer {
   /** Holds instance of root RendererElement */
   private fRootElement: RendererElement;
 
-  constructor (rootEl: HTMLElement) {
+  constructor (rootEl: Element) {
     // Create initial RendererElement and append it to root DOM el
     this.fRootElement = new RendererElement('div', {
       class: 'jsr',
