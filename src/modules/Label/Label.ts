@@ -21,7 +21,7 @@ export class Label implements Module {
   private fRenderer: Renderer;
   private fEvents: EventHandler;
 
-  public constructor (settings: ILabelSettings) {
+  public constructor (settings: ILabelSettings = {}) {
     this.fSettings = settings;
   }
 
