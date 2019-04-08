@@ -3,7 +3,7 @@ import { TValueReal, TValueRatio } from '~/types';
 import { realToRatio } from '~/helpers/values';
 
 export interface IConfig {
-  root: HTMLElement;
+  root: Element;
   modules: Module[];
   values: number[];
   min: number;
@@ -73,7 +73,7 @@ export class Config {
   /**
    * Returns root DOM element.
    */
-  public get rootEl (): HTMLElement {
+  public get rootEl (): Element {
     return this.fConfig.root;
   }
 

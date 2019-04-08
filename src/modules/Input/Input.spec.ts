@@ -1,12 +1,8 @@
 import { JSR } from '~/modules/JSR/JSR';
 import { Input } from '~/modules/Input/Input';
+import { rAF } from '~/helpers/tests';
 
 describe('Input', () => {
-  /** rAF Promise wrapper */
-  const rAF: () => Promise<number> = () => {
-    return new Promise((resolve) => requestAnimationFrame(resolve));
-  };
-
   let input1: HTMLInputElement;
   let input2: HTMLInputElement;
   let jsr: JSR;

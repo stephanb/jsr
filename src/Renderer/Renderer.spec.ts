@@ -1,4 +1,5 @@
 import { Renderer, RendererElement } from '~/Renderer/Renderer';
+import { rAF } from '~/helpers/tests';
 
 describe('Renderer', () => {
   let parent: HTMLElement;
@@ -30,11 +31,6 @@ describe('Renderer', () => {
 });
 
 describe('RendererElement', () => {
-  /** rAF Promise wrapper */
-  const rAF: () => Promise<number> = () => {
-    return new Promise((resolve) => requestAnimationFrame(resolve));
-  };
-
   describe('element getter', () => {
     it('should return element created by constructor', () => {
       const el = new RendererElement('div');
