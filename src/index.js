@@ -138,7 +138,9 @@ export default class {
   /* API */
   addEventListener (event, callback) {
     const eventNames = {
-      'update': 'input/value:update'
+      'update': 'input/value:update',
+      'slider-mouseup': 'view/slider:mouseup',
+      'bar-mouseup': 'view/bar:mouseup'
     };
 
     this.modules.eventizer.register(eventNames[event], callback);
