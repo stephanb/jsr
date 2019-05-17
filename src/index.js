@@ -154,6 +154,10 @@ export default class {
     return this;
   }
 
+  getValue (id) {
+    return this.modules.core.getValue(id);
+  }
+
   setLimit (limit, value) {
     this.modules.core.setLimit(limit, value);
 
