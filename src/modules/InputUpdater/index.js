@@ -4,9 +4,9 @@ class InputUpdater {
   }
 
   _bindEvents () {
-    this.modules.eventizer.register('core/value:update', (id, value) => {
+    this.modules.eventizer.register('core/value:update', (id, value, ratio) => {
       this.inputs[id].value = value;
-      this.modules.eventizer.trigger('input/value:update', this.inputs[id], value);
+      this.modules.eventizer.trigger('input/value:update', this.inputs[id], value, ratio);
       this.logger.debug(`JSR: Input ${id} updated with value ${value}`);
     });
   }
