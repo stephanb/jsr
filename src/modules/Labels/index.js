@@ -81,7 +81,7 @@ function updateLabel (id, real, ratio) {
   }
 
   // Update value
-  label.innerHTML = this.formatter ? this.formatter(real) : real;
+  label.innerHTML = this.formatter ? this.formatter(real, id) : real;
   this.values[id] = ratio;
 
   // Update position
